@@ -305,6 +305,30 @@ async function loadFAQs() {
 }
 
 // ============================================
+// FILTRO ONGs/Voluntarios
+// ============================================
+let filterOngs = true;
+let filterVoluntarios = true;
+
+function toggleFilter(btn, type) {
+	btn.classList.toggle('active');
+	if (type === 'ongs') filterOngs = !filterOngs;
+	if (type === 'voluntarios') filterVoluntarios = !filterVoluntarios;
+
+	const container = document.getElementById('general-list') || document.getElementById('personalized-list');
+	if (!container) return;
+
+	container.querySelectorAll('.ong-card').forEach(card => {
+		const cardType = card.dataset.type;
+		if (cardType === 'ong') {
+			card.style.display = filterOngs ? 'grid' : 'none';
+		} else if (cardType === 'voluntario') {
+			card.style.display = filterVoluntarios ? 'grid' : 'none';
+		}
+	});
+}
+
+// ============================================
 // VENTANAS EMERGENTES (MODALS)
 // ============================================
 

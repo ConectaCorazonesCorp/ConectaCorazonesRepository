@@ -505,23 +505,28 @@ h1 {
         padding: 15px;
     }
 
-    .card-left,
-    .card-center,
-    .card-right {
+    .card-left {
+        grid-row: 1;
         grid-column: 1 / -1;
         align-items: center;
     }
 
     .card-center {
+        grid-row: 2;
+        grid-column: 1 / -1;
         text-align: center;
         margin-bottom: 12px;
+        align-items: center;
     }
 
     .card-right {
+        grid-row: 3;
+        grid-column: 1 / -1;
         flex-direction: column;
         justify-content: center;
         width: 100%;
         gap: 15px;
+        align-items: center;
     }
 
     .ong-actions {
