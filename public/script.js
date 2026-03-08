@@ -313,11 +313,27 @@ let filterOngs = true;
 let filterVoluntarios = true;
 
 function toggleFilter(btn, type) {
-	btn.classList.toggle('active');
+	// 1. Invertir el estado solicitado
 	if (type === 'ongs') filterOngs = !filterOngs;
 	if (type === 'voluntarios') filterVoluntarios = !filterVoluntarios;
 
-	// Aplicar filtro a todas las tarjetas en el documento (más seguro que usar un contenedor)
+	// 2. Regla estricta: No podemos permitir que ambos estén apagados.
+	if (!filterOngs && !filterVoluntarios) {
+		// Si se apaga "ongs", encendemos "voluntarios" obligatoriamente, y viceversa
+		if (type === 'ongs') filterVoluntarios = true;
+		if (type === 'voluntarios') filterOngs = true;
+	}
+
+	// 3. Sincronizar visualmente TODOS los botones de filtro en la pantalla
+	document.querySelectorAll('.filter-btn').forEach(b => {
+		if (b.getAttribute('onclick').includes("'ongs'")) {
+			filterOngs ? b.classList.add('active') : b.classList.remove('active');
+		} else if (b.getAttribute('onclick').includes("'voluntarios'")) {
+			filterVoluntarios ? b.classList.add('active') : b.classList.remove('active');
+		}
+	});
+
+	// 4. Aplicar visibilidad a las tarjetas en la pantalla (usando 'grid' para respetar la maquetación CSS)
 	document.querySelectorAll('.ong-card').forEach(card => {
 		const cardType = card.dataset.type;
 		if (cardType === 'ong') {
