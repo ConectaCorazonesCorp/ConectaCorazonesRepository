@@ -3,10 +3,10 @@
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-	loadSurvey();
-	loadGeneralList();
-	loadPersonalizedList();
-	loadFAQs();
+	try { loadSurvey(); } catch (e) { }
+	try { loadGeneralList(); } catch (e) { }
+	try { loadPersonalizedList(); } catch (e) { }
+	try { loadFAQs(); } catch (e) { }
 });
 
 // ============================================
@@ -118,14 +118,19 @@ async function loadGeneralList() {
 		const voluntarios = await volsRes.json();
 
 		ongs.forEach(ong => {
-			container.appendChild(createOngCard(ong, false));
+			try {
+				if (ong) container.appendChild(createOngCard(ong, false));
+			} catch (e) { console.error('Error rendering ONG:', e); }
 		});
 
 		voluntarios.forEach(vol => {
-			container.appendChild(createVoluntarioCard(vol, false));
+			try {
+				if (vol) container.appendChild(createVoluntarioCard(vol, false));
+			} catch (e) { console.error('Error rendering Volunteer:', e); }
 		});
 	} catch (err) {
 		console.error('Error cargando lista general:', err);
+		container.innerHTML = '<p style="text-align:center;color:red;">Error cargando las organizaciones. Inténtalo más tarde.</p>';
 	}
 }
 
