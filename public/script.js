@@ -215,6 +215,7 @@ function createOngCard(ong, personalized) {
 	card.className = 'ong-card' + (personalized ? ' personalized' : '');
 	card.dataset.id = ong.id;
 	card.dataset.type = 'ong';
+	card.style.display = filterOngs ? 'grid' : 'none';
 
 	// Contribuir estrella personalizada y botón
 	const rightContent = personalized ? `<div class="star-icon">⭐</div>` : `<div></div>`;
@@ -244,6 +245,7 @@ function createVoluntarioCard(vol, personalized) {
 	card.className = 'ong-card' + (personalized ? ' personalized' : '');
 	card.dataset.id = vol.id;
 	card.dataset.type = 'voluntario';
+	card.style.display = filterVoluntarios ? 'grid' : 'none';
 
 	const contactInfo = [];
 	if (vol.phone) contactInfo.push(`📞 ${vol.phone}`);
@@ -315,10 +317,8 @@ function toggleFilter(btn, type) {
 	if (type === 'ongs') filterOngs = !filterOngs;
 	if (type === 'voluntarios') filterVoluntarios = !filterVoluntarios;
 
-	const container = document.getElementById('general-list') || document.getElementById('personalized-list');
-	if (!container) return;
-
-	container.querySelectorAll('.ong-card').forEach(card => {
+	// Aplicar filtro a todas las tarjetas en el documento (más seguro que usar un contenedor)
+	document.querySelectorAll('.ong-card').forEach(card => {
 		const cardType = card.dataset.type;
 		if (cardType === 'ong') {
 			card.style.display = filterOngs ? 'grid' : 'none';
