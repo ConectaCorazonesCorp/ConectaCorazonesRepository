@@ -9,10 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	loadFAQs();
 });
 
-// ---- ENCUESTA PASO A PASO (index.html) ----
+// ============================================
+// ENCUESTA PASO A PASO CON ETIQUETAS
+// ============================================
 let surveyQuestions = [];
 let currentQuestionIndex = 0;
-let surveyAnswers = {};
+let surveyAnswers = {};   // {questionId: optionValue}
+let surveyTags = [];       // ['salud', 'refugio', ...]
 
 async function loadSurvey() {
 	const container = document.getElementById('survey-questions');
@@ -28,6 +31,8 @@ async function loadSurvey() {
 		}
 
 		currentQuestionIndex = 0;
+		surveyAnswers = {};
+		surveyTags = [];
 		renderSurveyQuestion();
 	} catch (err) {
 		console.error('Error cargando encuesta:', err);
@@ -62,9 +67,14 @@ function renderSurveyQuestion() {
 		const label = document.createElement('label');
 		label.className = 'radio-label';
 		const isSelected = surveyAnswers[q.id] === opt.value;
-		label.innerHTML = `<input type="radio" name="survey-q-${q.id}" value="${opt.value}" ${isSelected ? 'checked' : ''}> ${opt.label}`;
-		label.querySelector('input').addEventListener('change', () => {
+		label.innerHTML = `<input type="radio" name="survey-q-${q.id}" value="${opt.value}" data-tag="${opt.tag || ''}" ${isSelected ? 'checked' : ''}> ${opt.label}`;
+		label.querySelector('input').addEventListener('change', (e) => {
 			surveyAnswers[q.id] = opt.value;
+			// Guardar el tag de la opción seleccionada
+			surveyTags = surveyTags.filter(t => t._qid !== q.id);
+			if (opt.tag) {
+				surveyTags.push({ _qid: q.id, tag: opt.tag });
+			}
 			nextBtn.disabled = false;
 		});
 		group.appendChild(label);
@@ -85,75 +95,86 @@ function nextSurveyQuestion() {
 		currentQuestionIndex++;
 		renderSurveyQuestion();
 	} else {
-		// Última pregunta: navegar con todas las respuestas
-		const params = new URLSearchParams(surveyAnswers);
-		window.location.href = 'ongs-generales.html?' + params.toString();
+		// Última pregunta: recopilar tags y navegar
+		const tags = surveyTags.map(t => t.tag).join(',');
+		window.location.href = 'ongs-personalizadas.html?tags=' + encodeURIComponent(tags);
 	}
 }
 window.nextSurveyQuestion = nextSurveyQuestion;
 
-// ---- ONGs GENERALES (ongs-generales.html) ----
-async function loadGeneralList() {
-	const container = document.getElementById('general-list');
-	if (!container) return;
-
-	try {
-		const [ongsRes, volsRes] = await Promise.all([
-			fetch('/api/ongs'),
-			fetch('/api/voluntarios')
-		]);
-		const ongs = await ongsRes.json();
-		const voluntarios = await volsRes.json();
-
-		ongs.forEach(ong => {
-			container.appendChild(createOngCard(ong, false));
-		});
-
-		voluntarios.forEach(vol => {
-			container.appendChild(createVoluntarioCard(vol, false));
-		});
-	} catch (err) {
-		console.error('Error cargando lista general:', err);
-	}
-}
-
-// ---- ONGs PERSONALIZADAS (ongs-personalizadas.html) ----
+// ============================================
+// ONGs PERSONALIZADAS CON MATCHING (ongs-personalizadas.html)
+// ============================================
 async function loadPersonalizedList() {
 	const container = document.getElementById('personalized-list');
 	if (!container) return;
 
 	try {
-		const [ongsRes, volsRes] = await Promise.all([
-			fetch('/api/ongs'),
-			fetch('/api/voluntarios')
-		]);
-		const ongs = await ongsRes.json();
-		const voluntarios = await volsRes.json();
-
-		ongs.forEach(ong => {
-			container.appendChild(createOngCard(ong, true));
-		});
-
-		voluntarios.forEach(vol => {
-			container.appendChild(createVoluntarioCard(vol, true));
-		});
-
-		// Filtrar si viene un parámetro de la encuesta
+		// Obtener tags del usuario de la URL
 		const params = new URLSearchParams(location.search);
-		const cat = params.get('help-type');
-		if (cat) {
-			container.querySelectorAll('.ong-card').forEach(card => {
-				if (card.dataset.category && card.dataset.category !== cat) {
-					card.style.display = 'none';
-				}
-			});
+		const tagsParam = params.get('tags');
+
+		let items = [];
+		if (tagsParam) {
+			// LLAMADA A LA NUEVA RUTA DE MATCHING SQL
+			const res = await fetch(`/api/match?tags=${encodeURIComponent(tagsParam)}`);
+			items = await res.json();
 		}
+
+		if (items.length > 0) {
+			// Mostrar resumen de resultados
+			const summary = document.createElement('div');
+			summary.className = 'results-summary';
+			summary.innerHTML = `
+				<h2>🎯 Resultados personalizados</h2>
+				<p>Hemos analizado tus respuestas y ordenado las ONGs y voluntarios según su relevancia para ti mediante nuestro algoritmo de match.</p>
+			`;
+			container.parentElement.insertBefore(summary, container);
+
+			// Renderizar Resultados ordenados con indicador de relevancia
+			items.forEach(item => {
+				let card;
+				if (item.type === 'ong') {
+					card = createOngCard(item, true);
+				} else {
+					card = createVoluntarioCard(item, true);
+				}
+
+				// Agregar barra de relevancia
+				if (item.relevance > 0) {
+					const badge = document.createElement('div');
+					badge.className = 'relevance-badge';
+					badge.innerHTML = `
+						<div class="relevance-bar">
+							<div class="relevance-fill" style="width:${item.relevance}%"></div>
+						</div>
+						<span class="relevance-text">${item.relevance}% compatible (${item.match_count} coincidencias exactas)</span>
+					`;
+					card.insertBefore(badge, card.firstChild.nextSibling);
+				}
+				container.appendChild(card);
+			});
+		} else {
+			// Sin tags o sin resultados: mostrar todas normalmente
+			const [ongsRes, volsRes] = await Promise.all([
+				fetch('/api/ongs'),
+				fetch('/api/voluntarios')
+			]);
+			const ongs = await ongsRes.json();
+			const voluntarios = await volsRes.json();
+
+			ongs.forEach(ong => container.appendChild(createOngCard(ong, true)));
+			voluntarios.forEach(vol => container.appendChild(createVoluntarioCard(vol, true)));
+		}
+
 	} catch (err) {
 		console.error('Error cargando lista personalizada:', err);
 	}
 }
 
-// ---- CREAR CARD DE ONG ----
+// ============================================
+// CREAR CARDS
+// ============================================
 function createOngCard(ong, personalized) {
 	const card = document.createElement('div');
 	card.className = 'ong-card' + (personalized ? ' personalized' : '');
@@ -170,7 +191,6 @@ function createOngCard(ong, personalized) {
 	return card;
 }
 
-// ---- CREAR CARD DE VOLUNTARIO ----
 function createVoluntarioCard(vol, personalized) {
 	const card = document.createElement('div');
 	card.className = 'ong-card' + (personalized ? ' personalized' : '');
@@ -195,7 +215,9 @@ function createVoluntarioCard(vol, personalized) {
 	return card;
 }
 
-// ---- FAQs (faq.html) ----
+// ============================================
+// FAQs (faq.html)
+// ============================================
 async function loadFAQs() {
 	const container = document.getElementById('faq-list');
 	if (!container) return;
@@ -214,7 +236,6 @@ async function loadFAQs() {
 			container.appendChild(item);
 		});
 
-		// Vincular acordeón después de crear los elementos
 		document.querySelectorAll('.faq-question').forEach(q => {
 			q.addEventListener('click', () => {
 				const ans = q.nextElementSibling;
@@ -227,7 +248,9 @@ async function loadFAQs() {
 	}
 }
 
-// ---- FILTRO ONGs/Voluntarios ----
+// ============================================
+// FILTRO ONGs/Voluntarios
+// ============================================
 let filterOngs = true;
 let filterVoluntarios = true;
 
@@ -249,12 +272,13 @@ function toggleFilter(btn, type) {
 	});
 }
 
-// ---- CONTACTAR ONG ----
+// ============================================
+// UTILIDADES
+// ============================================
 function contactOng(name) {
 	alert('Conectando con ' + name + '. Pronto recibirás más información.');
 }
 
-// ---- SOS ----
 function handleSOS(event) {
 	event.preventDefault();
 	window.open('https://salvavidas.com/blog/a-que-numero-llamar-en-caso-de-emergencia-en-espana-guia-completa-actualizada-2025/', '_blank');

@@ -14,6 +14,7 @@ app.use('/api/ongs', require('./routes/ongs'));
 app.use('/api/voluntarios', require('./routes/voluntarios'));
 app.use('/api/faqs', require('./routes/faqs'));
 app.use('/api/survey', require('./routes/survey'));
+app.use('/api/match', require('./routes/match'));
 
 // Ruta para obtener info de todas las tablas (para el admin)
 const db = require('./db');
