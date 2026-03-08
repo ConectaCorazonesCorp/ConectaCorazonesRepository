@@ -6,7 +6,8 @@
     --texto: #3E3E3E;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -425,22 +426,26 @@ h1 {
         flex-direction: column;
         align-items: flex-start;
     }
+
     .ong-logo {
         width: 100%;
         height: 120px;
         margin-bottom: 12px;
         min-height: auto;
     }
+
     .ong-logo img {
         max-width: 100px;
         max-height: 100px;
     }
+
     .ong-desc {
         margin: 0;
         padding: 12px;
         padding-right: 12px;
         height: auto;
     }
+
     .ong-actions {
         position: static;
         margin-top: 12px;
@@ -451,37 +456,75 @@ h1 {
 
 /* Filter buttons */
 .filter-buttons {
-	display: flex;
-	justify-content: center;
-	gap: 12px;
-	margin: 20px 0 12px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 20px 0 12px;
 }
 
 .filter-btn {
-	padding: 12px 24px;
-	border-radius: 8px;
-	border: 2px solid var(--gris-claro);
-	background: transparent;
-	color: var(--gris-claro);
-	font-weight: 700;
-	cursor: pointer;
-	transition: all 0.3s ease;
-	font-size: 1rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: 2px solid var(--gris-claro);
+    background: transparent;
+    color: var(--gris-claro);
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
 }
 
 .filter-btn.active {
-	background: var(--gris-claro);
-	color: white;
-	border-color: var(--gris-claro);
+    background: var(--gris-claro);
+    color: white;
+    border-color: var(--gris-claro);
 }
 
 .filter-btn:hover {
-	border-color: var(--marron-claro);
-	color: var(--marron-claro);
+    border-color: var(--marron-claro);
+    color: var(--marron-claro);
 }
 
 .filter-btn.active:hover {
-	background: var(--gris-claro);
-	border-color: var(--gris-claro);
-	color: white;
+    background: var(--gris-claro);
+    border-color: var(--gris-claro);
+    color: white;
+}
+
+/* SURVEY PROGRESS BAR */
+.survey-progress {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.survey-progress span {
+    font-size: 0.85rem;
+    color: var(--marron-oscuro);
+    font-weight: 700;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--marron-oscuro);
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.btn:disabled:hover {
+    transform: none;
 }

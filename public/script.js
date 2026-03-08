@@ -9,36 +9,88 @@ document.addEventListener('DOMContentLoaded', () => {
 	loadFAQs();
 });
 
-// ---- ENCUESTA (index.html) ----
+// ---- ENCUESTA PASO A PASO (index.html) ----
+let surveyQuestions = [];
+let currentQuestionIndex = 0;
+let surveyAnswers = {};
+
 async function loadSurvey() {
 	const container = document.getElementById('survey-questions');
 	if (!container) return;
 
 	try {
 		const res = await fetch('/api/survey');
-		const questions = await res.json();
+		surveyQuestions = await res.json();
 
-		questions.forEach(q => {
-			const h2 = document.createElement('h2');
-			h2.textContent = q.question;
-			container.appendChild(h2);
+		if (surveyQuestions.length === 0) {
+			container.innerHTML = '<p style="text-align:center;color:var(--gris-claro)">No hay preguntas configuradas.</p>';
+			return;
+		}
 
-			const group = document.createElement('div');
-			group.className = 'radio-group';
-
-			q.options.forEach(opt => {
-				const label = document.createElement('label');
-				label.className = 'radio-label';
-				label.innerHTML = `<input type="radio" name="help-type" value="${opt.value}" required> ${opt.label}`;
-				group.appendChild(label);
-			});
-
-			container.appendChild(group);
-		});
+		currentQuestionIndex = 0;
+		renderSurveyQuestion();
 	} catch (err) {
 		console.error('Error cargando encuesta:', err);
 	}
 }
+
+function renderSurveyQuestion() {
+	const container = document.getElementById('survey-questions');
+	const progress = document.getElementById('survey-progress');
+	const nextBtn = document.getElementById('survey-next');
+	if (!container || !surveyQuestions.length) return;
+
+	const q = surveyQuestions[currentQuestionIndex];
+	const total = surveyQuestions.length;
+
+	// Barra de progreso
+	if (progress) {
+		progress.innerHTML = `<span>Pregunta ${currentQuestionIndex + 1} de ${total}</span>
+		<div class="progress-bar"><div class="progress-fill" style="width:${((currentQuestionIndex + 1) / total) * 100}%"></div></div>`;
+	}
+
+	// Pregunta + opciones
+	container.innerHTML = '';
+	const h2 = document.createElement('h2');
+	h2.textContent = q.question;
+	container.appendChild(h2);
+
+	const group = document.createElement('div');
+	group.className = 'radio-group';
+
+	q.options.forEach(opt => {
+		const label = document.createElement('label');
+		label.className = 'radio-label';
+		const isSelected = surveyAnswers[q.id] === opt.value;
+		label.innerHTML = `<input type="radio" name="survey-q-${q.id}" value="${opt.value}" ${isSelected ? 'checked' : ''}> ${opt.label}`;
+		label.querySelector('input').addEventListener('change', () => {
+			surveyAnswers[q.id] = opt.value;
+			nextBtn.disabled = false;
+		});
+		group.appendChild(label);
+	});
+	container.appendChild(group);
+
+	// Botón siguiente / ver resultados
+	nextBtn.disabled = !surveyAnswers[q.id];
+	if (currentQuestionIndex >= total - 1) {
+		nextBtn.textContent = 'Ver resultados';
+	} else {
+		nextBtn.textContent = 'Siguiente';
+	}
+}
+
+function nextSurveyQuestion() {
+	if (currentQuestionIndex < surveyQuestions.length - 1) {
+		currentQuestionIndex++;
+		renderSurveyQuestion();
+	} else {
+		// Última pregunta: navegar con todas las respuestas
+		const params = new URLSearchParams(surveyAnswers);
+		window.location.href = 'ongs-generales.html?' + params.toString();
+	}
+}
+window.nextSurveyQuestion = nextSurveyQuestion;
 
 // ---- ONGs GENERALES (ongs-generales.html) ----
 async function loadGeneralList() {

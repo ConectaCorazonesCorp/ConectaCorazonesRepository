@@ -36,14 +36,13 @@
             </p>
 
             <div class="survey-box">
-                <form id="survey-form" action="ongs-generales.html" method="GET">
-                    <!-- Las preguntas se cargan dinámicamente desde la API -->
-                    <div id="survey-questions"></div>
-                    <div class="button-group">
-                        <button type="submit" class="btn btn-primary">Continuar</button>
-                        <a class="btn btn-secondary" href="ongs-generales.html">Saltar</a>
-                    </div>
-                </form>
+                <div id="survey-progress" class="survey-progress"></div>
+                <div id="survey-questions"></div>
+                <div class="button-group">
+                    <button id="survey-next" class="btn btn-primary" onclick="nextSurveyQuestion()"
+                        disabled>Siguiente</button>
+                    <a class="btn btn-secondary" href="ongs-generales.html">Saltar</a>
+                </div>
             </div>
         </div>
     </main>
