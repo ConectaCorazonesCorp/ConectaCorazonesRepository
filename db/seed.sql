@@ -9,13 +9,21 @@ CREATE TABLE IF NOT EXISTS ongs (
     description TEXT,
     logo VARCHAR(500),
     link VARCHAR(500),
-    tags TEXT DEFAULT ''
+    tags TEXT DEFAULT '',
+    scope VARCHAR(100) DEFAULT 'Local',
+    services TEXT DEFAULT ''
 );
 
--- Agregar columna tags si no existe
+-- Agregar columnas nuevas si no existen
 DO $$ BEGIN
     IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='ongs' AND column_name='tags') THEN
         ALTER TABLE ongs ADD COLUMN tags TEXT DEFAULT '';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='ongs' AND column_name='scope') THEN
+        ALTER TABLE ongs ADD COLUMN scope VARCHAR(100) DEFAULT 'Local';
+    END IF;
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='ongs' AND column_name='services') THEN
+        ALTER TABLE ongs ADD COLUMN services TEXT DEFAULT '';
     END IF;
 END $$;
 

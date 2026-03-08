@@ -172,17 +172,20 @@ async function loadPersonalizedList() {
 					card = createVoluntarioCard(item, true);
 				}
 
-				// Agregar barra de relevancia
+				// Agregar barra de relevancia a la columna izquierda (o al card)
 				if (item.relevance > 0) {
 					const badge = document.createElement('div');
-					badge.className = 'relevance-badge';
+					badge.className = 'relevance-badge inline-match';
 					badge.innerHTML = `
-						<div class="relevance-bar">
-							<div class="relevance-fill" style="width:${item.relevance}%"></div>
-						</div>
-						<span class="relevance-text">${item.relevance}% compatible (${item.match_count} coincidencias exactas)</span>
+						<strong>${item.relevance}% compatible</strong><br>
+						<span>(${item.match_count} coincidencias)</span>
 					`;
-					card.insertBefore(badge, card.firstChild.nextSibling);
+
+					// Insertar dentro del card-left
+					const leftCol = card.querySelector('.card-left');
+					if (leftCol) {
+						leftCol.appendChild(badge);
+					}
 				}
 				container.appendChild(card);
 			});
@@ -213,17 +216,26 @@ function createOngCard(ong, personalized) {
 	card.dataset.id = ong.id;
 	card.dataset.type = 'ong';
 
+	// Contribuir estrella personalizada y botón
+	const rightContent = personalized ? `<div class="star-icon">⭐</div>` : `<div></div>`;
+
 	card.innerHTML = `
-        <div class="entity-badge badge-ong">ONG</div>
-        <div class="ong-logo"><img src="${ong.logo || './images/default-avatar.png'}" alt="${ong.name}"></div>
-        <div class="ong-desc">
-            <strong>${ong.name}</strong><br>
-            ${ong.description}
-        </div>
-        <div class="ong-actions">
-            <a class="btn btn-primary" href="${ong.link || '#'}" target="_blank">Acceder</a>
-        </div>
-    `;
+		<div class="card-left">
+			<div class="entity-badge inline-badge badge-ong">ONG</div>
+			<div class="ong-logo"><img src="${ong.logo || './images/default-avatar.png'}" alt="${ong.name}"></div>
+			<!-- El match badge se insertará aquí en JS si tiene relevance -->
+		</div>
+		<div class="card-center">
+			<h3>${ong.name}</h3>
+			<p>${ong.description}</p>
+		</div>
+		<div class="card-right">
+			${rightContent}
+			<div class="ong-actions">
+				<button class="btn btn-primary" onclick="showOngModal('${encodeURIComponent(JSON.stringify(ong))}')">Acceder</button>
+			</div>
+		</div>
+	`;
 	return card;
 }
 
@@ -237,18 +249,25 @@ function createVoluntarioCard(vol, personalized) {
 	if (vol.phone) contactInfo.push(`📞 ${vol.phone}`);
 	if (vol.email) contactInfo.push(`✉ ${vol.email}`);
 
+	const rightContent = personalized ? `<div class="star-icon">⭐</div>` : `<div></div>`;
+
 	card.innerHTML = `
-        <div class="entity-badge badge-vol">Voluntario</div>
-        <div class="ong-logo"><img src="${vol.photo || './images/default-avatar.png'}" alt="${vol.name}"></div>
-        <div class="ong-desc">
-            <strong>${vol.name}</strong><br>
-            ${vol.description || ''}
-            ${contactInfo.length ? '<br><small>' + contactInfo.join(' | ') + '</small>' : ''}
-        </div>
-        <div class="ong-actions">
-            <button class="btn btn-primary" onclick="contactOng('${vol.name}')">Contactar</button>
-        </div>
-    `;
+		<div class="card-left">
+			<div class="entity-badge inline-badge badge-vol">Voluntario</div>
+			<div class="ong-logo"><img src="${vol.photo || './images/default-avatar.png'}" alt="${vol.name}"></div>
+			<!-- El match badge se insertará aquí en JS si tiene relevance -->
+		</div>
+		<div class="card-center">
+			<h3>${vol.name}</h3>
+			<p>${vol.description || ''}</p>
+		</div>
+		<div class="card-right">
+			${rightContent}
+			<div class="ong-actions">
+				<button class="btn btn-primary" onclick="showVoluntarioModal('${encodeURIComponent(JSON.stringify(vol))}')">Contactar</button>
+			</div>
+		</div>
+	`;
 	return card;
 }
 
@@ -286,30 +305,81 @@ async function loadFAQs() {
 }
 
 // ============================================
-// FILTRO ONGs/Voluntarios
+// VENTANAS EMERGENTES (MODALS)
 // ============================================
-let filterOngs = true;
-let filterVoluntarios = true;
 
-function toggleFilter(btn, type) {
-	btn.classList.toggle('active');
-	if (type === 'ongs') filterOngs = !filterOngs;
-	if (type === 'voluntarios') filterVoluntarios = !filterVoluntarios;
+function createModalInstance(contentHTML) {
+	// Remover modal existente si lo hay
+	const existing = document.getElementById('global-modal');
+	if (existing) existing.remove();
 
-	const container = document.getElementById('general-list') || document.getElementById('personalized-list');
-	if (!container) return;
+	const overlay = document.createElement('div');
+	overlay.id = 'global-modal';
+	overlay.className = 'modal-overlay';
+	overlay.innerHTML = `
+		<div class="modal-content">
+			<button class="modal-close" onclick="closeModal()">×</button>
+			${contentHTML}
+		</div>
+	`;
 
-	container.querySelectorAll('.ong-card').forEach(card => {
-		const cardType = card.dataset.type;
-		if (cardType === 'ong') {
-			card.style.display = filterOngs ? '' : 'none';
-		} else if (cardType === 'voluntario') {
-			card.style.display = filterVoluntarios ? '' : 'none';
-		}
+	// Cerrar si hace clic fuera del contenido
+	overlay.addEventListener('click', (e) => {
+		if (e.target === overlay) closeModal();
 	});
+
+	document.body.appendChild(overlay);
+
+	// Pequeño timeout para activar la transición CSS
+	setTimeout(() => {
+		overlay.classList.add('active');
+	}, 10);
 }
 
-// ============================================
+function closeModal() {
+	const overlay = document.getElementById('global-modal');
+	if (overlay) {
+		overlay.classList.remove('active');
+		setTimeout(() => overlay.remove(), 300); // Dar tiempo a la animación CSS
+	}
+}
+
+function showOngModal(encodedOng) {
+	const ong = JSON.parse(decodeURIComponent(encodedOng));
+	// Definimos defaults por si el ONG no tiene los scopes/servicios
+	const scope = ong.scope || 'No especificado';
+	const services = ong.services || 'Múltiples servicios de apoyo';
+
+	const html = `
+		<h3>${ong.name}</h3>
+		<p><strong>Alcance / Ámbito:</strong> ${scope}</p>
+		<p><strong>Servicios Principales:</strong> ${services}</p>
+		<p>${ong.description}</p>
+		<a href="${ong.link || '#'}" target="_blank" class="btn btn-primary" style="display:block; text-align:center; box-sizing:border-box;">Ir a la web oficial</a>
+	`;
+	createModalInstance(html);
+}
+
+// Ventana emergente para Voluntarios
+function showVoluntarioModal(encodedVol) {
+	const vol = JSON.parse(decodeURIComponent(encodedVol));
+
+	let contactHtml = '';
+	if (vol.phone) contactHtml += `<p><strong>📞 Teléfono:</strong> ${vol.phone}</p>`;
+	if (vol.email) contactHtml += `<p><strong>✉️ Correo Electrónico:</strong> <a href="mailto:${vol.email}">${vol.email}</a></p>`;
+
+	if (!contactHtml) contactHtml = '<p>No se han proporcionado datos de contacto directos.</p>';
+
+	const html = `
+		<h3>Contactar a ${vol.name}</h3>
+		<p>${vol.description || 'Voluntario de la plataforma.'}</p>
+		<hr style="border:0; border-top:1px solid #ccc; margin: 15px 0;">
+		<h4>Información de Contacto</h4>
+		${contactHtml}
+		<button class="btn btn-primary" onclick="closeModal()" style="width: 100%; box-sizing: border-box; margin-top: 15px;">Entendido</button>
+	`;
+	createModalInstance(html);
+}
 // UTILIDADES
 // ============================================
 function contactOng(name) {
