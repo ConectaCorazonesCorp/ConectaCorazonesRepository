@@ -182,8 +182,12 @@ function createOngCard(ong, personalized) {
 	card.dataset.type = 'ong';
 
 	card.innerHTML = `
-        <div class="ong-logo"><img src="${ong.logo}" alt="${ong.name}"></div>
-        <div class="ong-desc">${ong.description}</div>
+        <div class="entity-badge badge-ong">ONG</div>
+        <div class="ong-logo"><img src="${ong.logo || './images/default-avatar.png'}" alt="${ong.name}"></div>
+        <div class="ong-desc">
+            <strong>${ong.name}</strong><br>
+            ${ong.description}
+        </div>
         <div class="ong-actions">
             <a class="btn btn-primary" href="${ong.link || '#'}" target="_blank">Acceder</a>
         </div>
@@ -202,6 +206,7 @@ function createVoluntarioCard(vol, personalized) {
 	if (vol.email) contactInfo.push(`✉ ${vol.email}`);
 
 	card.innerHTML = `
+        <div class="entity-badge badge-vol">Voluntario</div>
         <div class="ong-logo"><img src="${vol.photo || './images/default-avatar.png'}" alt="${vol.name}"></div>
         <div class="ong-desc">
             <strong>${vol.name}</strong><br>

@@ -26,8 +26,16 @@ CREATE TABLE IF NOT EXISTS voluntarios (
     description TEXT,
     photo VARCHAR(500),
     phone VARCHAR(50),
-    email VARCHAR(200)
+    email VARCHAR(200),
+    tags TEXT DEFAULT ''
 );
+
+-- Agregar columna tags a voluntarios si no existe (por si la tabla ya existía)
+DO $$ BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='voluntarios' AND column_name='tags') THEN
+        ALTER TABLE voluntarios ADD COLUMN tags TEXT DEFAULT '';
+    END IF;
+END $$;
 
 -- Tabla de Preguntas Frecuentes
 CREATE TABLE IF NOT EXISTS faqs (
@@ -68,7 +76,7 @@ END $$;
 DELETE FROM survey_options;
 DELETE FROM survey_questions;
 
--- ============================================
+---
 -- ONGs (insertar si vacía, actualizar tags siempre)
 -- ============================================
 INSERT INTO ongs (name, description, logo, link, tags)
@@ -77,9 +85,11 @@ SELECT * FROM (VALUES
     ('HogarSí', 'HogarSí trabaja para proporcionar vivienda y acompañamiento a personas sin hogar.', './images/ONGS/HogarSiLogo.png', 'https://hogarsi.org', 'refugio,empleo,compania,alimento,calle'),
     ('Plena Inclusión', 'Plena Inclusión promueve la inclusión social y laboral de personas con discapacidad intelectual.', './images/ONGS/PlenaInclusionLogo.png', 'https://www.plenainclusion.org', 'discapacidad,inclusion,empleo,educacion,compania'),
     ('Apaside', 'Apaside es una organización dedicada a apoyar a personas con discapacidad y sus familias.', './images/ONGS/ApascideLogo.png', 'https://apaside.org', 'discapacidad,movilidad,compania,educacion,salud'),
-    ('Atam', 'Atam brinda atención integral y apoyo a personas mayores en situación de vulnerabilidad.', './images/ONGS/AtamLogo.png', 'https://www.atam.es', 'mayores,discapacidad,salud,compania,movilidad')
+    ('Atam', 'Atam brinda atención integral y apoyo a personas mayores en situación de vulnerabilidad.', './images/ONGS/AtamLogo.png', 'https://www.atam.es', 'mayores,discapacidad,salud,compania,movilidad'),
+    ('Fundación ONCE', 'Apoyo integral a personas con discapacidad visual y otras.', './images/ONGS/OnceLogo.png', 'https://www.fundaciononce.es', 'discapacidad,empleo,educacion,movilidad,legal'),
+    ('Bancos de Alimentos', 'Ofrece comida y productos básicos de primera necesidad.', './images/ONGS/BancoAlimentosLogo.png', 'https://www.bancodealimentos.es', 'alimento,emergencia')
 ) AS v(name, description, logo, link, tags)
-WHERE NOT EXISTS (SELECT 1 FROM ongs);
+WHERE NOT EXISTS (SELECT 1 FROM ongs WHERE name = v.name);
 
 -- Actualizar tags de ONGs existentes
 UPDATE ongs SET tags = 'salud,alimento,emergencia,refugio,legal' WHERE name = 'Cruz Roja';
@@ -87,6 +97,18 @@ UPDATE ongs SET tags = 'refugio,empleo,compania,alimento,calle' WHERE name = 'Ho
 UPDATE ongs SET tags = 'discapacidad,inclusion,empleo,educacion,compania' WHERE name = 'Plena Inclusión';
 UPDATE ongs SET tags = 'discapacidad,movilidad,compania,educacion,salud' WHERE name = 'Apaside';
 UPDATE ongs SET tags = 'mayores,discapacidad,salud,compania,movilidad' WHERE name = 'Atam';
+
+-- ============================================
+-- VOLUNTARIOS (insertar si vacía)
+-- ============================================
+INSERT INTO voluntarios (name, description, photo, phone, email, tags)
+SELECT * FROM (VALUES
+    ('Laura Gómez', 'Voluntaria especializada en acompañamiento a personas mayores y compras a domicilio.', './images/default-avatar.png', '600123456', 'laura@example.com', 'mayores,compania,movilidad,alimento'),
+    ('Carlos Ruiz', 'Ofrezco ayuda con trámites legales y acompañamiento al médico.', './images/default-avatar.png', '600654321', 'carlos@example.com', 'legal,salud,compania,movilidad'),
+    ('María Torres', 'Psicóloga que ofrece escucha activa y apoyo emocional online.', './images/default-avatar.png', '611222333', 'maria@example.com', 'educacion,salud,compania'),
+    ('Juan Pérez', 'Voluntario que ayuda a transportar alimentos y proveer mantas.', './images/default-avatar.png', '622333444', 'juan@example.com', 'alimento,refugio,calle,movilidad')
+) AS v(name, description, photo, phone, email, tags)
+WHERE NOT EXISTS (SELECT 1 FROM voluntarios WHERE name = v.name);
 
 -- ============================================
 -- FAQs (insertar si vacía)
@@ -97,7 +119,7 @@ SELECT * FROM (VALUES
     ('¿Recibiré ayuda económica directa de esta página?', 'No, somos un puente para conectarte con las organizaciones que brindan la ayuda.', 2),
     ('¿Cómo contacto con una ONG?', 'Pulsa "Acceder" en la ficha de la ONG para solicitar información; te guiaremos en los siguientes pasos.', 3)
 ) AS v(question, answer, sort_order)
-WHERE NOT EXISTS (SELECT 1 FROM faqs);
+WHERE NOT EXISTS (SELECT 1 FROM faqs WHERE question = v.question);
 
 -- ============================================
 -- ENCUESTA: 10 PREGUNTAS CON 3 RESPUESTAS CADA UNA
