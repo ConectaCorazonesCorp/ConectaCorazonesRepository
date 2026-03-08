@@ -24,6 +24,39 @@ body {
     min-height: 100vh;
 }
 
+/* SCROLLBAR A MEDIDA (Flotante / Hover) */
+::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+    /* Fondo transparente para que flote por encima */
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(139, 111, 71, 0);
+    /* Invisible por defecto */
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+/* Al acercar el ratón a la pantalla, se hace semitransparente. Al ponerlo encima de la barra, opaco */
+body:hover::-webkit-scrollbar-thumb {
+    background: rgba(139, 111, 71, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 111, 71, 0.8);
+}
+
+/* Firefox alternative para suavizar el scrollbar */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 111, 71, 0.4) transparent;
+}
+
 main {
     flex: 1;
 }
