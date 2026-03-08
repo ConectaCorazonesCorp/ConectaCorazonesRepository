@@ -103,6 +103,33 @@ function nextSurveyQuestion() {
 window.nextSurveyQuestion = nextSurveyQuestion;
 
 // ============================================
+// ONGs GENERALES (ongs-generales.html)
+// ============================================
+async function loadGeneralList() {
+	const container = document.getElementById('general-list');
+	if (!container) return;
+
+	try {
+		const [ongsRes, volsRes] = await Promise.all([
+			fetch('/api/ongs'),
+			fetch('/api/voluntarios')
+		]);
+		const ongs = await ongsRes.json();
+		const voluntarios = await volsRes.json();
+
+		ongs.forEach(ong => {
+			container.appendChild(createOngCard(ong, false));
+		});
+
+		voluntarios.forEach(vol => {
+			container.appendChild(createVoluntarioCard(vol, false));
+		});
+	} catch (err) {
+		console.error('Error cargando lista general:', err);
+	}
+}
+
+// ============================================
 // ONGs PERSONALIZADAS CON MATCHING (ongs-personalizadas.html)
 // ============================================
 async function loadPersonalizedList() {
