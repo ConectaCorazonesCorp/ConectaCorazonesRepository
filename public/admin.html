@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin — Conecta Corazones</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="top-nav">
+            <div class="nav-left">
+                <a class="nav-btn" href="index.html">Inicio</a>
+                <a class="nav-btn" href="ongs-generales.html">ONG y voluntariados</a>
+                <a class="nav-btn" href="faq.html">Preguntas frecuentes</a>
+                <a class="nav-btn active" href="admin.html">⚙️ Admin</a>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="sos-logo" onclick="handleSOS(event)">
+                    <img src="./images/SOSLogo.png" alt="SOS">
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="admin-container">
+            <h1>🗄️ Panel de Administración</h1>
+            <p class="admin-subtitle">Gestiona las tablas de la base de datos</p>
+
+            <!-- Pestañas de tablas -->
+            <div class="admin-tabs" id="admin-tabs"></div>
+
+            <!-- Área de contenido -->
+            <div class="admin-content" id="admin-content">
+                <div class="admin-loading">Cargando datos...</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <span class="contact-title">Contacto</span>
+            <a href="mailto:conecta.corazones@gmail.com" class="contact-email">✉ conecta.corazones@gmail.com</a>
+        </div>
+    </footer>
+
+    <!-- Modal para editar/crear -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title">Editar registro</h2>
+                <button class="modal-close" onclick="closeModal()">✕</button>
+            </div>
+            <form id="modal-form" class="modal-body"></form>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button class="btn btn-primary" onclick="saveRecord()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
