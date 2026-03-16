@@ -256,7 +256,7 @@ function createVoluntarioCard(vol, personalized) {
 	card.innerHTML = `
 		<div class="card-left">
 			<div class="entity-badge inline-badge badge-vol">Voluntario</div>
-			<div class="ong-logo"><img src="${vol.photo || './images/default-avatar.png'}" alt="${vol.name}"></div>
+			<div class="ong-logo"><img src="${vol.photo || vol.image || './images/default-avatar.png'}" alt="${vol.name}"></div>
 			<!-- El match badge se insertará aquí en JS si tiene relevance -->
 		</div>
 		<div class="card-center">
