@@ -223,7 +223,7 @@ function createOngCard(ong, personalized) {
 	card.innerHTML = `
 		<div class="card-left">
 			<div class="entity-badge inline-badge badge-ong">ONG</div>
-			<div class="ong-logo"><img src="${ong.logo || './images/default-avatar.png'}" alt="${ong.name}"></div>
+			<div class="ong-logo"><img src="${ong.logo || ong.image || './images/default-avatar.png'}" alt="${ong.name}"></div>
 			<!-- El match badge se insertará aquí en JS si tiene relevance -->
 		</div>
 		<div class="card-center">
