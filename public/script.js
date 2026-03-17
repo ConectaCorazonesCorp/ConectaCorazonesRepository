@@ -168,7 +168,7 @@ async function loadPersonalizedList() {
 			const summary = document.createElement('div');
 			summary.className = 'results-summary';
 			summary.innerHTML = `
-				<p>Hemos analizado tus respuestas y ordenado las ONGs y voluntarios según su relevancia para ti mediante nuestro algoritmo de match.</p>
+				<p>Estas son las ONGs y voluntarios que mejor se adaptan a tus preferencias. Explora tus mejores opciones y comienza a ayudar.</p>
 			`;
 			
 			const filterButtons = container.parentElement.querySelector('.filter-buttons');
