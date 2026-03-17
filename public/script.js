@@ -198,7 +198,7 @@ async function loadPersonalizedList() {
 					// Insertar dentro del card-badges
 					const badgesCol = card.querySelector('.card-badges');
 					if (badgesCol) {
-						badgesCol.insertBefore(badge, badgesCol.firstChild);
+						badgesCol.appendChild(badge); // Ahora se añade debajo del tipo de entidad
 					}
 				}
 				container.appendChild(card);
