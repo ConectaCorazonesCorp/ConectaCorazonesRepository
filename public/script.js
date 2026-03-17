@@ -242,7 +242,7 @@ function createOngCard(ong, personalized) {
 			<h3>${ong.name}</h3>
 		</div>
 		<div class="card-star">
-			${personalized ? '<div class="star-icon">⭐</div>' : ''}
+			${personalized ? '<div class="star-icon">⭐<span class="tooltip-text">Resultado personalizado</span></div>' : ''}
 		</div>
 		<div class="card-description">
 			<p>${ong.description}</p>
@@ -272,7 +272,7 @@ function createVoluntarioCard(vol, personalized) {
 			<h3>${vol.name}</h3>
 		</div>
 		<div class="card-star">
-			${personalized ? '<div class="star-icon">⭐</div>' : ''}
+			${personalized ? '<div class="star-icon">⭐<span class="tooltip-text">Resultado personalizado</span></div>' : ''}
 		</div>
 		<div class="card-description">
 			<p>${vol.description || ''}</p>
