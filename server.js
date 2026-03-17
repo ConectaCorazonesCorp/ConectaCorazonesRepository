@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 // Rutas API
 app.use('/api/ongs', require('./routes/ongs'));
 app.use('/api/voluntarios', require('./routes/voluntarios'));
