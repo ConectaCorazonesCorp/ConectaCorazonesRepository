@@ -757,7 +757,8 @@ h1 {
     }
 
     .card-header-text h3 {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        line-height: 1.1;
         margin-bottom: 4px;
         padding-right: 30px; /* Evitar que choque con la estrella */
     }
