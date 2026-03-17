@@ -191,10 +191,16 @@ h1 {
 }
 
 /* DESCRIPCIÓN */
-.description {
+.description,
+.results-summary p {
     color: var(--gris-claro);
     text-align: center;
-    margin: 12px 0 18px;
+    margin: 12px auto 24px;
+    font-size: 1.15rem;
+    max-width: 850px;
+    line-height: 1.6;
+    padding: 0 16px;
+    box-sizing: border-box;
 }
 
 /* ENCUESTA */

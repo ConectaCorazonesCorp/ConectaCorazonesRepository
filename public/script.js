@@ -168,10 +168,15 @@ async function loadPersonalizedList() {
 			const summary = document.createElement('div');
 			summary.className = 'results-summary';
 			summary.innerHTML = `
-				<h2>🎯 Resultados personalizados</h2>
 				<p>Hemos analizado tus respuestas y ordenado las ONGs y voluntarios según su relevancia para ti mediante nuestro algoritmo de match.</p>
 			`;
-			container.parentElement.insertBefore(summary, container);
+			
+			const filterButtons = container.parentElement.querySelector('.filter-buttons');
+			if (filterButtons) {
+				container.parentElement.insertBefore(summary, filterButtons);
+			} else {
+				container.parentElement.insertBefore(summary, container);
+			}
 
 			// Renderizar Resultados ordenados con indicador de relevancia
 			items.forEach(item => {
@@ -319,15 +324,15 @@ let filterOngs = true;
 let filterVoluntarios = true;
 
 function toggleFilter(btn, type) {
-	// 1. Invertir el estado solicitado
-	if (type === 'ongs') filterOngs = !filterOngs;
-	if (type === 'voluntarios') filterVoluntarios = !filterVoluntarios;
-
-	// 2. Regla estricta: No podemos permitir que ambos estén apagados.
-	if (!filterOngs && !filterVoluntarios) {
-		// Si se apaga "ongs", encendemos "voluntarios" obligatoriamente, y viceversa
-		if (type === 'ongs') filterVoluntarios = true;
-		if (type === 'voluntarios') filterOngs = true;
+	// Comportamiento de radio button: al seleccionar uno, se desactiva el otro.
+	// No se puede pulsar para desactivar el que ya está activo.
+	
+	if (type === 'ongs' && !filterOngs) {
+		filterOngs = true;
+		filterVoluntarios = false;
+	} else if (type === 'voluntarios' && !filterVoluntarios) {
+		filterVoluntarios = true;
+		filterOngs = false;
 	}
 
 	// 3. Sincronizar visualmente TODOS los botones de filtro en la pantalla
