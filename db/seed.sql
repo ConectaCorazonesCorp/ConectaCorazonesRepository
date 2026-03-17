@@ -211,8 +211,8 @@ INSERT INTO survey_options (question_id, label, value, tag) VALUES
     (currval('survey_questions_id_seq'), '📱 Online o telefónica', 'online', 'educacion');
 
 -- P10
-INSERT INTO survey_questions (question, sort_order) VALUES ('¿Qué es lo más urgente para ti ahora?', 10);
+INSERT INTO survey_questions (question, sort_order) VALUES ('¿Prefieres apoyo de forma individual o en grupo?', 10);
 INSERT INTO survey_options (question_id, label, value, tag) VALUES
-    (currval('survey_questions_id_seq'), '🍽️ Comida y productos básicos', 'urgente_comida', 'alimento'),
-    (currval('survey_questions_id_seq'), '🏥 Atención sanitaria urgente', 'urgente_salud', 'emergencia'),
-    (currval('survey_questions_id_seq'), '🛏️ Un techo y seguridad', 'urgente_techo', 'refugio');
+    (currval('survey_questions_id_seq'), '👤 De forma individual', 'individual', 'compania'),
+    (currval('survey_questions_id_seq'), '👥 En grupo o comunidad', 'grupo', 'inclusion'),
+    (currval('survey_questions_id_seq'), '🤝 Me es indiferente', 'indiferente', 'compania');
