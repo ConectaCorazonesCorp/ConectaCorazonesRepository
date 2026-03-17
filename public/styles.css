@@ -286,6 +286,10 @@ h1 {
     color: var(--gris-claro);
 }
 
+.btn-secondary {
+    font-weight: 700;
+}
+
 .btn-skip {
     background: var(--gris-claro);
     color: white;
