@@ -765,7 +765,7 @@ h1 {
 
     .card-star {
         position: absolute;
-        top: 24px;
+        top: 20px; /* Alineado a la altura del padding superior de la foto */
         right: 16px;
     }
 
@@ -791,7 +791,7 @@ h1 {
         grid-column: 1 / span 2;
         grid-row: 4;
         display: flex;
-        justify-content: center;
+        justify-content: flex-end; /* Botón en la esquina inferior derecha */
         padding-top: 16px;
     }
 
