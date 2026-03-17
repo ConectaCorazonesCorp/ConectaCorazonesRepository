@@ -324,16 +324,19 @@ let filterOngs = true;
 let filterVoluntarios = true;
 
 function toggleFilter(btn, type) {
-	// Comportamiento de radio button: al seleccionar uno, se desactiva el otro.
-	// No se puede pulsar para desactivar el que ya está activo.
-	
-	if (type === 'ongs' && !filterOngs) {
-		filterOngs = true;
-		filterVoluntarios = false;
-	} else if (type === 'voluntarios' && !filterVoluntarios) {
-		filterVoluntarios = true;
-		filterOngs = false;
+	// 1. Calcular el nuevo estado si permitimos el click
+	const newOngs = type === 'ongs' ? !filterOngs : filterOngs;
+	const newVols = type === 'voluntarios' ? !filterVoluntarios : filterVoluntarios;
+
+	// 2. Regla estricta: No podemos permitir que ambos estén apagados.
+	if (!newOngs && !newVols) {
+		// Si intentar apagar este botón deja ambos apagados, ignoramos el click
+		return;
 	}
+
+	// 3. Aplicar el nuevo estado
+	filterOngs = newOngs;
+	filterVoluntarios = newVols;
 
 	// 3. Sincronizar visualmente TODOS los botones de filtro en la pantalla
 	document.querySelectorAll('.filter-btn').forEach(b => {
