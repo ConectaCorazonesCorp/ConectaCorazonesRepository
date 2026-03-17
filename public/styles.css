@@ -704,6 +704,13 @@ h1 {
         margin-top: 5px;
     }
 
+    /* FOOTER en una sola línea */
+    .footer-content {
+        font-size: 0.8rem;
+        white-space: nowrap;
+        gap: 6px;
+    }
+
     /* Site container paddings */
     .container {
         padding: 10px;
