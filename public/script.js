@@ -324,19 +324,20 @@ let filterOngs = true;
 let filterVoluntarios = true;
 
 function toggleFilter(btn, type) {
-	// 1. Calcular el nuevo estado si permitimos el click
-	const newOngs = type === 'ongs' ? !filterOngs : filterOngs;
-	const newVols = type === 'voluntarios' ? !filterVoluntarios : filterVoluntarios;
-
-	// 2. Regla estricta: No podemos permitir que ambos estén apagados.
-	if (!newOngs && !newVols) {
-		// Si intentar apagar este botón deja ambos apagados, ignoramos el click
-		return;
+	if (filterOngs && filterVoluntarios) {
+		// Ambos están prendidos. Si toco uno, ese se queda prendido y el otro se apaga.
+		if (type === 'ongs') {
+			filterVoluntarios = false;
+		} else {
+			filterOngs = false;
+		}
+	} else if (type === 'ongs' && !filterOngs) {
+		// Estaba apagado ONGs (solo Voluntarios prendidos) y toco ONGs -> Se prenden los dos
+		filterOngs = true;
+	} else if (type === 'voluntarios' && !filterVoluntarios) {
+		// Estaba apagado Voluntarios (solo ONGs prendidos) y toco Voluntarios -> Se prenden los dos
+		filterVoluntarios = true;
 	}
-
-	// 3. Aplicar el nuevo estado
-	filterOngs = newOngs;
-	filterVoluntarios = newVols;
 
 	// 3. Sincronizar visualmente TODOS los botones de filtro en la pantalla
 	document.querySelectorAll('.filter-btn').forEach(b => {
