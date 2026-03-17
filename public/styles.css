@@ -782,14 +782,14 @@ h1 {
         align-self: start;
     }
 
-    /* Contenedor central a la derecha (Nombre pegado a la izquierda) */
+    /* Contenedor central a la derecha */
     .card-header-text {
         grid-column: 2;
         grid-row: 1;
         display: flex;
         flex-direction: column;
-        align-items: flex-start; /* Pegado a la izquierda de su celda (hacia la foto) */
-        text-align: left;
+        align-items: center; /* Centrado horizontalmente */
+        text-align: center;
         padding-top: 4px; /* Alinear un poco con la foto */
     }
 
@@ -797,7 +797,9 @@ h1 {
         font-size: 1.8rem;
         line-height: 1.1;
         margin-bottom: 4px;
-        padding-right: 30px; /* Evitar que choque con la estrella */
+        padding: 0 40px 0 10px; /* Evitar la estrella a la derecha, compensación a la izquierda para mantener centrado */
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .card-star {
@@ -821,7 +823,10 @@ h1 {
         grid-column: 2;
         grid-row: 2 / span 2;
         padding: 8px 0 0 8px; /* Reiniciar el padding fuerte de desktop */
-        text-align: left; /* Restringido al espacio derecho */
+        text-align: center; /* Centrar la descripción en móvil también para que haga juego */
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
     }
 
     .card-action {
