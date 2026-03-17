@@ -134,6 +134,15 @@ SELECT * FROM (VALUES
 ) AS v(question, answer, sort_order)
 WHERE NOT EXISTS (SELECT 1 FROM faqs WHERE question = v.question);
 
+INSERT INTO faqs (question, answer)
+SELECT * FROM (VALUES
+('¿Cómo puedo contactar con un voluntario?','Puedes ver sus datos de contacto en su ficha y comunicarte directamente con ellos según la opción disponible.'),
+('¿Tiene algún coste usar esta plataforma?','No, el uso de la plataforma es totalmente gratuito. Nuestro objetivo es facilitar el acceso a ayuda sin barreras.')
+) AS v(question, answer)
+WHERE NOT EXISTS (
+    SELECT 1 FROM faqs WHERE question = v.question
+);
+
 -- ============================================
 -- ENCUESTA: 10 PREGUNTAS CON 3 RESPUESTAS CADA UNA
 -- ============================================
