@@ -640,6 +640,11 @@ h1 {
     transition: transform 0.3s ease;
 }
 
+.modal-content .btn {
+    width: auto;
+    min-width: 150px;
+}
+
 .modal-overlay.active .modal-content {
     transform: scale(1);
 }
@@ -787,5 +792,9 @@ h1 {
         width: auto;
         min-width: 150px;
     }
+
+    .modal-content .btn {
+    width: auto;
+}
 }
 
