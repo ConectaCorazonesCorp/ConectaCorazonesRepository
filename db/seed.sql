@@ -111,12 +111,17 @@ UPDATE ongs SET tags = 'mayores,discapacidad,salud,compania,movilidad' WHERE nam
 -- ============================================
 INSERT INTO voluntarios (name, description, photo, phone, email, tags)
 SELECT * FROM (VALUES
-    ('Laura Gómez', 'Voluntaria especializada en acompañamiento a personas mayores y compras a domicilio.', './images/LGVoluntarios.png', '600123456', 'laura@example.com', 'mayores,compania,movilidad,alimento'),
-    ('Carlos Ruiz', 'Ofrezco ayuda con trámites legales y acompañamiento al médico.', './images/CRVoluntarios.png', '600654321', 'carlos@example.com', 'legal,salud,compania,movilidad'),
-    ('María Torres', 'Psicóloga que ofrece escucha activa y apoyo emocional online.', './images/MTVoluntarios.png', '611222333', 'maria@example.com', 'educacion,salud,compania'),
+    ('Laura Gómez', 'Voluntaria especializada en acompañamiento a personas mayores y compras a domicilio.', '/images/ONGS/LGVoluntarios.png', '600123456', 'laura@example.com', 'mayores,compania,movilidad,alimento'),
+    ('Carlos Ruiz', 'Ofrezco ayuda con trámites legales y acompañamiento al médico.', '/images/ONGS/CRVoluntarios.png', '600654321', 'carlos@example.com', 'legal,salud,compania,movilidad'),
+    ('María Torres', 'Psicóloga que ofrece escucha activa y apoyo emocional online.', '/images/ONGS/MTVoluntarios.png', '611222333', 'maria@example.com', 'educacion,salud,compania'),
     ('Juan Pérez', 'Voluntario que ayuda a transportar alimentos y proveer mantas.', '/images/ONGS/JPVoluntarios.png', '622333444', 'juan@example.com', 'alimento,refugio,calle,movilidad')
 ) AS v(name, description, photo, phone, email, tags)
 WHERE NOT EXISTS (SELECT 1 FROM voluntarios WHERE name = v.name);
+
+UPDATE voluntarios SET photo = '/images/ONGS/LGVoluntarios.png' WHERE name = 'Laura Gómez';
+UPDATE voluntarios SET photo = '/images/ONGS/CRVoluntarios.png' WHERE name = 'Carlos Ruiz';
+UPDATE voluntarios SET photo = '/images/ONGS/MTVoluntarios.png' WHERE name = 'María Torres';
+UPDATE voluntarios SET photo = '/images/ONGS/JPVoluntarios.png' WHERE name = 'Juan Pérez';
 
 -- ============================================
 -- FAQs (insertar si vacía)
