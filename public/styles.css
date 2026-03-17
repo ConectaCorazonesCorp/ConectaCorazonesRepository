@@ -30,6 +30,7 @@ body {
 }
 
 html {
+    font-size: 106.25%; /* ~17px como base en lugar de 16px, hace crecer todo el texto un poco */
     scrollbar-width: none;
     -ms-overflow-style: none; /* IE and Edge */
 }
