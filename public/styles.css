@@ -128,7 +128,7 @@ main {
     display: block;
     width: 100%;
     height: auto;
-    border-radius: 12px;
+    border-radius: 0;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     object-fit: cover;
 }
@@ -145,7 +145,7 @@ main {
 }
 
 .hero-image.small img {
-    border-radius: 12px;
+    border-radius: 0;
 }
 
 /* CONTAINER */
