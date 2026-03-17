@@ -390,7 +390,7 @@ h1 {
     grid-row: 2;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Empieza inmediatamente debajo del título */
+    justify-content: center; /* Centrado vertical en la caja debajo del título */
     align-items: center;
     text-align: center;
     height: 100%; 
