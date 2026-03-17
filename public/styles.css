@@ -292,7 +292,7 @@ h1 {
     background: var(--marron-claro);
     display: grid;
     grid-template-columns: 160px 1fr 180px;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto 1fr auto;
     gap: 12px 24px;
     box-sizing: border-box;
     width: 100%;
@@ -331,9 +331,10 @@ h1 {
 
 .card-logo {
     grid-column: 1;
-    grid-row: 1;
+    grid-row: 1 / span 2;
     width: 160px;
     height: 160px;
+    align-self: start;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -351,11 +352,12 @@ h1 {
 
 .card-badges {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 3;
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: stretch;
+    justify-content: flex-end;
 }
 
 .relevance-badge.inline-match {
@@ -387,7 +389,7 @@ h1 {
 
 .card-description {
     grid-column: 2;
-    grid-row: 2;
+    grid-row: 2 / span 2;
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centrado vertical en la caja debajo del título */
@@ -459,7 +461,7 @@ h1 {
 
 .card-action {
     grid-column: 3;
-    grid-row: 2;
+    grid-row: 3;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
