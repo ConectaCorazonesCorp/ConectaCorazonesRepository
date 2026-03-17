@@ -111,10 +111,10 @@ UPDATE ongs SET tags = 'mayores,discapacidad,salud,compania,movilidad' WHERE nam
 -- ============================================
 INSERT INTO voluntarios (name, description, photo, phone, email, tags)
 SELECT * FROM (VALUES
-    ('Laura Gómez', 'Voluntaria especializada en acompañamiento a personas mayores y compras a domicilio.', './images/default-avatar.png', '600123456', 'laura@example.com', 'mayores,compania,movilidad,alimento'),
-    ('Carlos Ruiz', 'Ofrezco ayuda con trámites legales y acompañamiento al médico.', './images/default-avatar.png', '600654321', 'carlos@example.com', 'legal,salud,compania,movilidad'),
-    ('María Torres', 'Psicóloga que ofrece escucha activa y apoyo emocional online.', './images/default-avatar.png', '611222333', 'maria@example.com', 'educacion,salud,compania'),
-    ('Juan Pérez', 'Voluntario que ayuda a transportar alimentos y proveer mantas.', './images/default-avatar.png', '622333444', 'juan@example.com', 'alimento,refugio,calle,movilidad')
+    ('Laura Gómez', 'Voluntaria especializada en acompañamiento a personas mayores y compras a domicilio.', './images/LGVoluntarios.png', '600123456', 'laura@example.com', 'mayores,compania,movilidad,alimento'),
+    ('Carlos Ruiz', 'Ofrezco ayuda con trámites legales y acompañamiento al médico.', './images/CRVoluntarios.png', '600654321', 'carlos@example.com', 'legal,salud,compania,movilidad'),
+    ('María Torres', 'Psicóloga que ofrece escucha activa y apoyo emocional online.', './images/MTVoluntarios.png', '611222333', 'maria@example.com', 'educacion,salud,compania'),
+    ('Juan Pérez', 'Voluntario que ayuda a transportar alimentos y proveer mantas.', './images/JPVoluntarios.png', '622333444', 'juan@example.com', 'alimento,refugio,calle,movilidad')
 ) AS v(name, description, photo, phone, email, tags)
 WHERE NOT EXISTS (SELECT 1 FROM voluntarios WHERE name = v.name);
 
