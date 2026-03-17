@@ -232,7 +232,8 @@ h1 {
     gap: 8px;
 }
 
-.radio-label input[type="radio"] {
+.radio-label input[type="radio"],
+.radio-label input[type="checkbox"] {
     cursor: pointer;
     accent-color: var(--marron-oscuro);
 }

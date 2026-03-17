@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 let surveyQuestions = [];
 let currentQuestionIndex = 0;
-let surveyAnswers = {};   // {questionId: optionValue}
-let surveyTags = [];       // ['salud', 'refugio', ...]
+let surveyAnswers = {};   // {questionId: [optionValue1, optionValue2, ...]}
+let surveyTags = [];       // [{_qid, tag}, ...]
 
 async function loadSurvey() {
 	const container = document.getElementById('survey-questions');
@@ -63,26 +63,36 @@ function renderSurveyQuestion() {
 	const group = document.createElement('div');
 	group.className = 'radio-group';
 
+	// Inicializar array de respuestas para esta pregunta si no existe
+	if (!surveyAnswers[q.id]) surveyAnswers[q.id] = [];
+
 	q.options.forEach(opt => {
 		const label = document.createElement('label');
 		label.className = 'radio-label';
-		const isSelected = surveyAnswers[q.id] === opt.value;
-		label.innerHTML = `<input type="radio" name="survey-q-${q.id}" value="${opt.value}" data-tag="${opt.tag || ''}" ${isSelected ? 'checked' : ''}> ${opt.label}`;
+		const isSelected = surveyAnswers[q.id].includes(opt.value);
+		label.innerHTML = `<input type="checkbox" name="survey-q-${q.id}" value="${opt.value}" data-tag="${opt.tag || ''}" ${isSelected ? 'checked' : ''}> ${opt.label}`;
 		label.querySelector('input').addEventListener('change', (e) => {
-			surveyAnswers[q.id] = opt.value;
-			// Guardar el tag de la opción seleccionada
-			surveyTags = surveyTags.filter(t => t._qid !== q.id);
-			if (opt.tag) {
-				surveyTags.push({ _qid: q.id, tag: opt.tag });
+			if (e.target.checked) {
+				// Añadir valor y tag
+				if (!surveyAnswers[q.id].includes(opt.value)) {
+					surveyAnswers[q.id].push(opt.value);
+				}
+				if (opt.tag) {
+					surveyTags.push({ _qid: q.id, tag: opt.tag });
+				}
+			} else {
+				// Quitar valor y tag
+				surveyAnswers[q.id] = surveyAnswers[q.id].filter(v => v !== opt.value);
+				surveyTags = surveyTags.filter(t => !(t._qid === q.id && t.tag === opt.tag));
 			}
-			nextBtn.disabled = false;
+			nextBtn.disabled = surveyAnswers[q.id].length === 0;
 		});
 		group.appendChild(label);
 	});
 	container.appendChild(group);
 
 	// Botón siguiente / ver resultados
-	nextBtn.disabled = !surveyAnswers[q.id];
+	nextBtn.disabled = surveyAnswers[q.id].length === 0;
 	if (currentQuestionIndex >= total - 1) {
 		nextBtn.textContent = 'Ver resultados';
 	} else {
@@ -177,8 +187,7 @@ async function loadPersonalizedList() {
 					const badge = document.createElement('div');
 					badge.className = 'relevance-badge inline-match';
 					badge.innerHTML = `
-						<strong>${item.relevance}% compatible</strong><br>
-						<span>(${item.match_count} coincidencias)</span>
+						<strong>${item.relevance}% compatible</strong>
 					`;
 
 					// Insertar dentro del card-left
