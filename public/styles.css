@@ -99,6 +99,7 @@ main {
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 20;
+    position: relative;
 }
 
 .sos-logo img {
@@ -110,6 +111,44 @@ main {
 
 .sos-logo:hover img {
     transform: scale(1.1);
+}
+
+.sos-logo .tooltip-text {
+    visibility: hidden;
+    width: 110px;
+    background-color: #E74C3C;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px;
+    position: absolute;
+    z-index: 30;
+    top: 100%;
+    right: 50%;
+    transform: translateX(50%);
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-weight: bold;
+}
+
+.sos-logo .tooltip-text::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #E74C3C transparent;
+}
+
+.sos-logo:hover .tooltip-text,
+.sos-logo:active .tooltip-text {
+    visibility: visible;
+    opacity: 1;
 }
 
 /* HERO IMAGE: centrar full-width correctamente */
