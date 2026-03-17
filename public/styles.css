@@ -764,13 +764,14 @@ h1 {
     }
 
     .ong-actions {
-        margin-top: 0;
-        width: 100%;
+        display: flex;
+        gap: 12px;
         justify-content: center;
     }
 
     .ong-actions .btn {
-        width: 100%;
+        width: auto;
+        min-width: 120px;
     }
 
     /* Filter buttons stacking */
