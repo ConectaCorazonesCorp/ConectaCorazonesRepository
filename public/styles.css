@@ -466,6 +466,10 @@ h1 {
     cursor: pointer;
 }
 
+.faq-question {
+    font-size: 1.1rem;
+}
+
 .faq-answer {
     max-height: 0;
     overflow: hidden;
