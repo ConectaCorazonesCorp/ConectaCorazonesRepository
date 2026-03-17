@@ -276,6 +276,10 @@ h1 {
     transform: scale(1.1);
 }
 
+.btn-primary {
+    font-family: inherit;
+}
+
 .btn-secondary {
     background: transparent;
     border: 2px solid var(--gris-claro);
