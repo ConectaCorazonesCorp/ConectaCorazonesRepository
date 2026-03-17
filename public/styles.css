@@ -282,6 +282,12 @@ h1 {
     color: var(--gris-claro);
 }
 
+.btn-skip {
+    background: var(--gris-claro);
+    color: white;
+    border: none;
+}
+
 /* ONG CARDS */
 .container-grid {
     display: flex;
@@ -775,3 +781,4 @@ h1 {
         max-width: 100%;
     }
 }
+
