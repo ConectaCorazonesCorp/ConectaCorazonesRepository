@@ -190,10 +190,10 @@ async function loadPersonalizedList() {
 						<strong>${item.relevance}% compatible</strong>
 					`;
 
-					// Insertar dentro del card-left
-					const leftCol = card.querySelector('.card-left');
-					if (leftCol) {
-						leftCol.appendChild(badge);
+					// Insertar dentro del card-badges
+					const badgesCol = card.querySelector('.card-badges');
+					if (badgesCol) {
+						badgesCol.insertBefore(badge, badgesCol.firstChild);
 					}
 				}
 				container.appendChild(card);
@@ -226,24 +226,24 @@ function createOngCard(ong, personalized) {
 	card.dataset.type = 'ong';
 	card.style.display = filterOngs ? 'grid' : 'none';
 
-	// Contribuir estrella personalizada y botón
-	const rightContent = personalized ? `<div class="star-icon">⭐</div>` : `<div></div>`;
-
 	card.innerHTML = `
-		<div class="card-left">
-			<div class="entity-badge inline-badge badge-ong">ONG</div>
-			<div class="ong-logo"><img src="${ong.logo || ong.image || './images/default-avatar.png'}" alt="${ong.name}"></div>
-			<!-- El match badge se insertará aquí en JS si tiene relevance -->
+		<div class="card-logo">
+			<img src="${ong.logo || ong.image || './images/default-avatar.png'}" alt="${ong.name}">
 		</div>
-		<div class="card-center">
+		<div class="card-badges">
+			<div class="entity-badge inline-badge badge-ong">ONG</div>
+		</div>
+		<div class="card-header-text">
 			<h3>${ong.name}</h3>
+		</div>
+		<div class="card-star">
+			${personalized ? '<div class="star-icon">⭐</div>' : ''}
+		</div>
+		<div class="card-description">
 			<p>${ong.description}</p>
 		</div>
-		<div class="card-right">
-			${rightContent}
-			<div class="ong-actions">
-				<button class="btn btn-primary" onclick="showOngModal('${encodeURIComponent(JSON.stringify(ong))}')">Acceder</button>
-			</div>
+		<div class="card-action">
+			<button class="btn btn-primary" onclick="showOngModal('${encodeURIComponent(JSON.stringify(ong))}')">Acceder</button>
 		</div>
 	`;
 	return card;
@@ -256,27 +256,24 @@ function createVoluntarioCard(vol, personalized) {
 	card.dataset.type = 'voluntario';
 	card.style.display = filterVoluntarios ? 'grid' : 'none';
 
-	const contactInfo = [];
-	if (vol.phone) contactInfo.push(`📞 ${vol.phone}`);
-	if (vol.email) contactInfo.push(`✉ ${vol.email}`);
-
-	const rightContent = personalized ? `<div class="star-icon">⭐</div>` : `<div></div>`;
-
 	card.innerHTML = `
-		<div class="card-left">
-			<div class="entity-badge inline-badge badge-vol">Voluntario</div>
-			<div class="ong-logo"><img src="${vol.photo || vol.image || './images/default-avatar.png'}" alt="${vol.name}"></div>
-			<!-- El match badge se insertará aquí en JS si tiene relevance -->
+		<div class="card-logo">
+			<img src="${vol.photo || vol.image || './images/default-avatar.png'}" alt="${vol.name}">
 		</div>
-		<div class="card-center">
+		<div class="card-badges">
+			<div class="entity-badge inline-badge badge-vol">Voluntario</div>
+		</div>
+		<div class="card-header-text">
 			<h3>${vol.name}</h3>
+		</div>
+		<div class="card-star">
+			${personalized ? '<div class="star-icon">⭐</div>' : ''}
+		</div>
+		<div class="card-description">
 			<p>${vol.description || ''}</p>
 		</div>
-		<div class="card-right">
-			${rightContent}
-			<div class="ong-actions">
-				<button class="btn btn-primary" onclick="showVoluntarioModal('${encodeURIComponent(JSON.stringify(vol))}')">Contactar</button>
-			</div>
+		<div class="card-action">
+			<button class="btn btn-primary" onclick="showVoluntarioModal('${encodeURIComponent(JSON.stringify(vol))}')">Contactar</button>
 		</div>
 	`;
 	return card;
