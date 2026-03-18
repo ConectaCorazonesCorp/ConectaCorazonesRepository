@@ -418,6 +418,7 @@ h1 {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding-top: 12px; /* Alineado a la altura del padding interno de la foto */
 }
 
 .card-header-text h3 {
@@ -425,6 +426,7 @@ h1 {
     color: var(--marron-oscuro);
     font-size: 2rem;
     line-height: 1.1;
+    padding: 0 40px; /* Evitar que en nombres largos choque con la estrella */
 }
 
 .card-description {
@@ -449,6 +451,7 @@ h1 {
     grid-column: 3;
     grid-row: 1;
     text-align: right;
+    padding-top: 12px; /* Alineado a la altura del padding interno de la foto */
 }
 
 .star-icon {
@@ -830,21 +833,21 @@ h1 {
         flex-direction: column;
         align-items: center; /* Centrado horizontalmente */
         text-align: center;
-        padding-top: 4px; /* Alinear un poco con la foto */
+        padding-top: 12px; /* Alinear a la misma altura del interior de la foto */
     }
 
     .card-header-text h3 {
         font-size: 1.8rem;
         line-height: 1.1;
         margin-bottom: 4px;
-        padding: 0 40px 0 10px; /* Evitar la estrella a la derecha, compensación a la izquierda para mantener centrado */
+        padding: 0 50px; /* Evitar que la estrella choque con el texto pero manteniendo el centrado visual */
         width: 100%;
         box-sizing: border-box;
     }
 
     .card-star {
         position: absolute;
-        top: 20px; /* Alineado a la altura del padding superior de la foto */
+        top: 32px; /* 20px de padding del container + 12px para alinearlo nivelado con foto y texto */
         right: 16px;
     }
 
