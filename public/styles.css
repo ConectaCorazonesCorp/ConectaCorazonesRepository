@@ -332,8 +332,8 @@ h1 {
     background: var(--marron-claro);
     display: grid;
     grid-template-columns: 160px 1fr 180px;
-    grid-template-rows: auto 1fr auto;
-    gap: 12px 24px;
+    grid-template-rows: auto auto 1fr;
+    gap: 8px 24px;
     box-sizing: border-box;
     width: 100%;
     max-width: 850px;
@@ -371,7 +371,7 @@ h1 {
 
 .card-logo {
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1;
     width: 160px;
     height: 160px;
     align-self: start;
@@ -392,12 +392,13 @@ h1 {
 
 .card-badges {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 2;
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: stretch;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    padding-top: 10px; /* Separacion inmediata bajo el logo */
 }
 
 .relevance-badge.inline-match {
@@ -829,7 +830,7 @@ h1 {
 
     .card-logo {
         grid-column: 1;
-        grid-row: 1 / span 2;
+        grid-row: 1;
         width: 140px;
         height: 140px;
         align-self: start;
@@ -867,12 +868,13 @@ h1 {
     /* Badges debajo de la foto */
     .card-badges {
         grid-column: 1;
-        grid-row: 3;
+        grid-row: 2 / span 2; /* Para que esté alineado bajo la imagen incluso si el texto a la derecha es largo */
         display: flex;
         flex-direction: column;
-        align-items: stretch; /* Que ocupen el ancho de la columna de 140px */
+        align-items: stretch;
         justify-content: flex-start;
         gap: 8px;
+        padding-top: 8px; /* Separación inmediata bajo logo */
     }
 
     .card-description {
