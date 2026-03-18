@@ -424,9 +424,13 @@ h1 {
 .card-header-text h3 {
     margin: 0 0 8px 0;
     color: var(--marron-oscuro);
-    font-size: 2rem;
+    font-size: 1.8rem;
     line-height: 1.1;
-    padding: 0 40px; /* Evitar que en nombres largos choque con la estrella */
+    padding: 0 30px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card-description {
@@ -842,10 +846,12 @@ h1 {
     }
 
     .card-header-text h3 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         line-height: 1.1;
         margin-bottom: 4px;
-        padding: 0 50px; /* Evitar que la estrella choque con el texto pero manteniendo el centrado visual */
+        padding: 0 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
         width: 100%;
         box-sizing: border-box;
     }
