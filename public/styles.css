@@ -802,7 +802,7 @@ h1 {
 
     .ong-card {
         grid-template-columns: 140px 1fr;
-        grid-template-rows: auto auto auto auto;
+        grid-template-rows: 140px auto auto auto;
         height: auto;
         min-height: 280px;
         padding: 20px 16px;
@@ -814,13 +814,13 @@ h1 {
     /* FOTO */
     .card-logo {
         grid-column: 1;
-        grid-row: 1; /* 👈 quitamos el span */
+        grid-row: 1;
         width: 140px;
         height: 140px;
         align-self: start;
     }
 
-    /* BADGES debajo de la foto (alineados SIEMPRE) */
+    /* BADGES */
     .card-badges {
         grid-column: 1;
         grid-row: 2;
@@ -856,12 +856,9 @@ h1 {
         right: 16px;
     }
 
-    /* DESCRIPCIÓN */
+    /* ❌ DESCRIPCIÓN ELIMINADA */
     .card-description {
-        grid-column: 2;
-        grid-row: 2;
-        padding: 8px 10px 0 10px;
-        text-align: center;
+        display: none;
     }
 
     /* BOTÓN */
