@@ -856,18 +856,17 @@ h1 {
         right: 16px;
     }
 
-    /* ❌ DESCRIPCIÓN ELIMINADA */
     .card-description {
         display: none;
     }
 
-    /* BOTÓN */
     .card-action {
-        grid-column: 1 / span 2;
-        grid-row: 4;
+        grid-column: 2;
+        grid-row: 2;
         display: flex;
-        justify-content: flex-end;
-        padding: 16px 8px 0 8px;
+        justify-content: center; /* centrado respecto a su columna */
+        align-items: center;
+        padding: 0;
     }
 
     .entity-badge.inline-badge,
