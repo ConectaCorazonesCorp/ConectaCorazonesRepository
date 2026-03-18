@@ -760,30 +760,31 @@ h1 {
 /* RESPONSIVE */
 @media (max-width: 768px) {
 
-    /* Navbar stack */
+    /* Header en una sola línea */
     .top-nav {
-        flex-direction: column;
-        justify-content: center;
-        height: auto;
-        padding: 10px 0;
-        gap: 15px;
+        flex-direction: row;
+        justify-content: space-between;
+        height: 70px;
+        padding: 0 15px;
+        gap: 0;
     }
 
     .nav-left {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 5px;
     }
 
     .nav-btn {
-        padding: 6px 10px;
-        font-size: 0.9rem;
+        padding: 6px 8px;
+        font-size: 0.8rem;
+        white-space: nowrap;
     }
 
     .sos-logo {
         position: static;
         transform: none;
-        margin-top: 5px;
+        margin-top: 0;
     }
 
     /* FOOTER en una sola línea */
