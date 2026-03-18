@@ -870,7 +870,8 @@ h1 {
         display: flex;
         justify-content: flex-end;
         align-items: flex-start;
-        margin-top: 6px; /* 👈 puedes moverlo sin afectar badges */
+        margin-top: 0; /* 👈 quitamos empuje */
+        transform: translateY(-4px); /* 👈 lo subimos sin afectar nada */
     }
 
     .entity-badge.inline-badge,
