@@ -853,12 +853,12 @@ h1 {
         box-sizing: border-box;
     }
 
-    /* ⭐ ESTRELLA encima del título */
     .card-star {
-        position: absolute;
-        left: calc(140px + 50%); /* 👈 centro de la columna derecha */
-        top: 30px; /* 👈 ajusta altura sobre el título */
-        transform: translateX(-50%);
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+        align-self: start; 
+        transform: translateY(-12px); 
     }
 
     /* ❌ SIN DESCRIPCIÓN */
