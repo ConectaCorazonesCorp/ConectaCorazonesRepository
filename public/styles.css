@@ -800,12 +800,13 @@ h1 {
         padding: 10px;
     }
 
+    /* 🔥 CARD ADAPTATIVA */
     .ong-card {
         grid-template-columns: 140px 1fr;
-        grid-template-rows: 140px auto auto auto;
+        grid-template-rows: 140px auto;
         height: auto;
-        min-height: 240px; /* 👈 antes 280px → más compacto */
-        padding: 16px 14px; /* 👈 un poco menos de aire */
+        min-height: unset; /* 👈 clave */
+        padding: 16px 14px;
         gap: 10px 14px;
         width: 100%;
         max-width: 100vw;
@@ -827,8 +828,8 @@ h1 {
         display: flex;
         flex-direction: column;
         gap: 6px;
-        align-self: start;      /* 👈 los pega arriba de su celda */
-        transform: translateY(-4px); /* 👈 los sube un poco */
+        align-self: start;
+        transform: translateY(-4px); /* 👈 pequeño ajuste fino */
     }
 
     /* TÍTULO */
@@ -857,19 +858,19 @@ h1 {
         right: 16px;
     }
 
-    /* ❌ DESCRIPCIÓN ELIMINADA */
+    /* ❌ SIN DESCRIPCIÓN */
     .card-description {
         display: none;
     }
 
-    /* BOTÓN independiente */
+    /* BOTÓN independiente pero alineado */
     .card-action {
         grid-column: 2;
         grid-row: 2;
         display: flex;
         justify-content: flex-end;
         align-items: flex-start;
-        margin-top: 6px; /* 👈 puedes modificar esto sin afectar badges */
+        margin-top: 6px; /* 👈 puedes moverlo sin afectar badges */
     }
 
     .entity-badge.inline-badge,
