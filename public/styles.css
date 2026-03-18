@@ -816,10 +816,9 @@ h1 {
 
     .card-logo {
         grid-column: 1;
-        grid-row: 1 / span 2;
+        grid-row: 1;
         width: 140px;
         height: 140px;
-        align-self: start;
     }
 
     /* Contenedor central a la derecha */
@@ -834,8 +833,8 @@ h1 {
     }
 
     .card-header-text h3 {
-        font-size: 1.8rem;
-        line-height: 1.1;
+        font-size: 1.4rem;
+        line-height: 1.2;
         margin-bottom: 4px;
         padding: 0 40px 0 10px; /* Evitar la estrella a la derecha, compensación a la izquierda para mantener centrado */
         width: 100%;
@@ -851,19 +850,19 @@ h1 {
     /* Badges debajo de la foto */
     .card-badges {
         grid-column: 1;
-        grid-row: 3;
+        grid-row: 2; /* 👈 antes era 3 */
         display: flex;
         flex-direction: column;
-        align-items: stretch; /* Que ocupen el ancho de la columna de 140px */
-        justify-content: flex-start;
-        gap: 8px;
+        align-items: stretch;
+        justify-content: flex-end;
+        gap: 6px;
     }
 
     .card-description {
         grid-column: 2;
-        grid-row: 2 / span 2;
-        padding: 8px 0 0 8px; /* Reiniciar el padding fuerte de desktop */
-        text-align: center; /* Centrar la descripción en móvil también para que haga juego */
+        grid-row: 2; /* 👈 cambio clave */
+        padding: 8px 0 0 8px;
+        text-align: center;
         display: flex;
         align-items: flex-start;
         justify-content: center;
@@ -873,8 +872,13 @@ h1 {
         grid-column: 1 / span 2;
         grid-row: 4;
         display: flex;
-        justify-content: flex-end; /* Botón en la esquina inferior derecha */
+        justify-content: center; /* 👈 CAMBIO CLAVE */
         padding-top: 16px;
+    }
+
+    .card-action .btn {
+        width: 100%;
+        max-width: 220px;
     }
 
     .entity-badge.inline-badge,
