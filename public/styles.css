@@ -517,7 +517,8 @@ h1 {
     grid-row: 1 / span 3;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 5px; /* Ajuste fino para posicionarlo abajo del todo */
 }
 
 /* FAQ */
@@ -891,6 +892,7 @@ h1 {
         grid-row: 4;
         display: flex;
         justify-content: center;
+        align-items: flex-end; 
         padding-top: 16px;
     }
 
