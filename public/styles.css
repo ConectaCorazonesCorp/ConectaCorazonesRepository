@@ -854,8 +854,9 @@ h1 {
 
     .card-star {
         position: absolute;
-        top: 20px;
         right: 16px;
+        top: 50%;
+        transform: translateY(-10%); /* 👈 la baja un poco para quedar entre título y botón */
     }
 
     /* ❌ SIN DESCRIPCIÓN */
