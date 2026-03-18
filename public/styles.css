@@ -332,49 +332,29 @@ h1 {
     background: var(--marron-claro);
     display: grid;
     grid-template-columns: 160px 1fr 180px;
-    grid-template-rows: auto auto 1fr;
-    gap: 8px 24px;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 850px;
-    min-height: 220px;
+.card-left {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
 }
 
-.ong-card.personalized::after {
-    display: none;
-}
-
-.entity-badge.inline-badge {
-    display: inline-block;
-    /* Sobrescribe el absolute display: none !important -> No, solo display: none global */
-    position: static;
-    transform: none;
-    font-size: 0.8rem;
-    padding: 6px 12px;
-    background: var(--gris-claro);
-    color: white;
-    border-radius: 6px;
-    font-weight: bold;
-    text-align: center;
-    width: 100%;
-    box-sizing: border-box;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.entity-badge.badge-ong {
-    background: var(--marron-oscuro);
-}
-
-.entity-badge.badge-vol {
-    background: var(--marron-oscuro);
+.card-main {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 12px;
 }
 
 .card-logo {
-    grid-column: 1;
-    grid-row: 1;
     width: 160px;
     height: 160px;
-    align-self: start;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -391,14 +371,12 @@ h1 {
 }
 
 .card-badges {
-    grid-column: 1;
-    grid-row: 2;
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-items: stretch;
-    justify-content: flex-start;
-    padding-top: 10px; /* Separacion inmediata bajo el logo */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .relevance-badge.inline-match {
@@ -413,13 +391,10 @@ h1 {
 }
 
 .card-header-text {
-    grid-column: 2;
-    grid-row: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding-top: 12px; /* Alineado a la altura del padding interno de la foto */
 }
 
 .card-header-text h3 {
@@ -435,15 +410,12 @@ h1 {
 }
 
 .card-description {
-    grid-column: 2;
-    grid-row: 2;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    height: 100%;
-    padding: 0 40px; /* Mas padding para que no se salga */
+    padding: 10px 40px; /* Mas padding para que no se salga */
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -865,22 +837,46 @@ h1 {
         z-index: 10;
     }
 
-    /* Badges debajo de la foto */
-    .card-badges {
+    .card-left {
         grid-column: 1;
-        grid-row: 2 / span 2; /* Para que esté alineado bajo la imagen incluso si el texto a la derecha es largo */
+        grid-row: 1 / span 4;
         display: flex;
         flex-direction: column;
-        align-items: stretch;
-        justify-content: flex-start;
+        align-items: center;
         gap: 8px;
-        padding-top: 8px; /* Separación inmediata bajo logo */
+    }
+
+    .card-main {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .card-logo {
+        width: 140px;
+        height: 140px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .card-header-text h3 {
+        font-size: 1.5rem;
+        line-height: 1.1;
+        margin-bottom: 4px;
+        padding: 0 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     .card-description {
-        grid-column: 2;
-        grid-row: 2 / span 2;
-        padding: 10px 15px; /* Padding extra para que no choque con bordes */
+        padding: 8px 15px;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -918,7 +914,7 @@ h1 {
     }
 
     .modal-content .btn {
-    width: auto;
-}
+        width: auto;
+    }
 }
 

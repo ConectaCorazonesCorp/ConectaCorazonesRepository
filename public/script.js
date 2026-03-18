@@ -232,20 +232,24 @@ function createOngCard(ong, personalized) {
 	card.style.display = filterOngs ? 'grid' : 'none';
 
 	card.innerHTML = `
-		<div class="card-logo">
-			<img src="${ong.logo || ong.image || './images/default-avatar.png'}" alt="${ong.name}">
+		<div class="card-left">
+			<div class="card-logo">
+				<img src="${ong.logo || ong.image || './images/default-avatar.png'}" alt="${ong.name}">
+			</div>
+			<div class="card-badges">
+				<div class="entity-badge inline-badge badge-ong">ONG</div>
+			</div>
 		</div>
-		<div class="card-badges">
-			<div class="entity-badge inline-badge badge-ong">ONG</div>
-		</div>
-		<div class="card-header-text">
-			<h3>${ong.name}</h3>
+		<div class="card-main">
+			<div class="card-header-text">
+				<h3>${ong.name}</h3>
+			</div>
+			<div class="card-description">
+				<p>${ong.description}</p>
+			</div>
 		</div>
 		<div class="card-star">
 			${personalized ? '<div class="star-icon">⭐<span class="tooltip-text">Resultado personalizado</span></div>' : ''}
-		</div>
-		<div class="card-description">
-			<p>${ong.description}</p>
 		</div>
 		<div class="card-action">
 			<button class="btn btn-primary" onclick="showOngModal('${encodeURIComponent(JSON.stringify(ong))}')">Acceder</button>
@@ -262,20 +266,24 @@ function createVoluntarioCard(vol, personalized) {
 	card.style.display = filterVoluntarios ? 'grid' : 'none';
 
 	card.innerHTML = `
-		<div class="card-logo">
-			<img src="${vol.photo || vol.image || './images/default-avatar.png'}" alt="${vol.name}">
+		<div class="card-left">
+			<div class="card-logo">
+				<img src="${vol.photo || vol.image || './images/default-avatar.png'}" alt="${vol.name}">
+			</div>
+			<div class="card-badges">
+				<div class="entity-badge inline-badge badge-vol">Voluntario</div>
+			</div>
 		</div>
-		<div class="card-badges">
-			<div class="entity-badge inline-badge badge-vol">Voluntario</div>
-		</div>
-		<div class="card-header-text">
-			<h3>${vol.name}</h3>
+		<div class="card-main">
+			<div class="card-header-text">
+				<h3>${vol.name}</h3>
+			</div>
+			<div class="card-description">
+				<p>${vol.description || ''}</p>
+			</div>
 		</div>
 		<div class="card-star">
 			${personalized ? '<div class="star-icon">⭐<span class="tooltip-text">Resultado personalizado</span></div>' : ''}
-		</div>
-		<div class="card-description">
-			<p>${vol.description || ''}</p>
 		</div>
 		<div class="card-action">
 			<button class="btn btn-primary" onclick="showVoluntarioModal('${encodeURIComponent(JSON.stringify(vol))}')">Contactar</button>
