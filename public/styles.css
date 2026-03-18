@@ -856,9 +856,9 @@ h1 {
     /* ⭐ ESTRELLA encima del título */
     .card-star {
         position: absolute;
-        top: -18px; /* 👈 encima del texto */
+        top: 0;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -110%); /* 👈 más arriba que antes */
     }
 
     /* ❌ SIN DESCRIPCIÓN */
