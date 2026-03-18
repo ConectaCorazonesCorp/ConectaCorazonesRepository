@@ -800,16 +800,16 @@ h1 {
         padding: 10px;
     }
 
-    /* 🔥 CARD ADAPTATIVA */
     .ong-card {
         grid-template-columns: 140px 1fr;
         grid-template-rows: 140px auto;
         height: auto;
-        min-height: unset; /* 👈 clave */
+        min-height: unset;
         padding: 16px 14px;
         gap: 10px 14px;
         width: 100%;
         max-width: 100vw;
+        position: relative; /* 👈 necesario para la estrella */
     }
 
     /* FOTO */
@@ -829,34 +829,36 @@ h1 {
         flex-direction: column;
         gap: 6px;
         align-self: start;
-        transform: translateY(-4px); /* 👈 pequeño ajuste fino */
+        transform: translateY(-4px);
     }
 
-    /* TÍTULO */
+    /* 🔥 TÍTULO centrado en altura */
     .card-header-text {
         grid-column: 2;
         grid-row: 1;
         display: flex;
         flex-direction: column;
+        justify-content: center; /* 👈 centrado vertical */
         align-items: center;
         text-align: center;
-        padding-top: 4px;
+        position: relative; /* 👈 referencia para estrella */
     }
 
     .card-header-text h3 {
         font-size: 1.4rem;
         line-height: 1.2;
-        margin-bottom: 4px;
-        padding: 0 30px 0 10px;
+        margin: 0;
+        padding: 0 10px;
         width: 100%;
         box-sizing: border-box;
     }
 
+    /* ⭐ ESTRELLA encima del título */
     .card-star {
         position: absolute;
-        right: 16px;
-        top: 50%;
-        transform: translateY(-10%); /* 👈 la baja un poco para quedar entre título y botón */
+        top: -18px; /* 👈 encima del texto */
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     /* ❌ SIN DESCRIPCIÓN */
@@ -864,15 +866,15 @@ h1 {
         display: none;
     }
 
-    /* BOTÓN independiente pero alineado */
+    /* BOTÓN */
     .card-action {
         grid-column: 2;
         grid-row: 2;
         display: flex;
         justify-content: flex-end;
         align-items: flex-start;
-        margin-top: 0; /* 👈 quitamos empuje */
-        transform: translateY(-4px); /* 👈 lo subimos sin afectar nada */
+        margin-top: 0;
+        transform: translateY(-4px);
     }
 
     .entity-badge.inline-badge,
