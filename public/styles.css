@@ -802,7 +802,7 @@ h1 {
 
     .ong-card {
         grid-template-columns: 140px 1fr;
-        grid-template-rows: auto auto auto auto auto; /* 👈 añadimos una fila más */
+        grid-template-rows: 140px auto auto auto; /* 👈 fila fija para la foto */
         height: auto;
         min-height: 280px;
         padding: 20px 16px;
@@ -811,10 +811,9 @@ h1 {
         max-width: 100vw;
     }
 
-    /* FOTO (NO TOCADA) */
     .card-logo {
         grid-column: 1;
-        grid-row: 1 / span 2;
+        grid-row: 1;
         width: 140px;
         height: 140px;
         align-self: start;
@@ -822,11 +821,11 @@ h1 {
 
     .card-badges {
         grid-column: 1;
-        grid-row: 3; /* 👈 ahora SÍ está debajo de la foto */
+        grid-row: 2; /* 👈 SIEMPRE justo debajo de la foto */
         display: flex;
         flex-direction: column;
         gap: 6px;
-        margin-top: 4px; /* 👈 pequeña separación */
+        margin-top: 6px;
     }
 
     /* TÍTULO más pequeño y centrado */
