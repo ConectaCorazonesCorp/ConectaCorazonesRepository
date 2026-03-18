@@ -802,7 +802,7 @@ h1 {
 
     .ong-card {
         grid-template-columns: 140px 1fr;
-        grid-template-rows: auto auto auto auto;
+        grid-template-rows: auto auto auto auto auto; /* 👈 añadimos una fila más */
         height: auto;
         min-height: 280px;
         padding: 20px 16px;
@@ -822,12 +822,11 @@ h1 {
 
     .card-badges {
         grid-column: 1;
-        grid-row: 2;
+        grid-row: 3; /* 👈 ahora SÍ está debajo de la foto */
         display: flex;
         flex-direction: column;
-        justify-content: flex-start; /* 👈 ya no los pega abajo del todo */
         gap: 6px;
-        margin-top: 6px; /* 👈 separación mínima respecto a la foto */
+        margin-top: 4px; /* 👈 pequeña separación */
     }
 
     /* TÍTULO más pequeño y centrado */
