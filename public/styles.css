@@ -44,23 +44,23 @@ main {
     width: 100%;
     background: var(--marron-claro);
     position: relative;
-    height: auto; /* MODIFICADO: Ajuste automático */
-    min-height: 70px; /* MODIFICADO: Altura mínima */
-    padding: 15px 0; /* NUEVO: Espaciado arriba y abajo */
+    height: auto; 
+    min-height: 70px; 
+    padding: 15px 0; 
     box-sizing: border-box;
 }
 
 .top-nav {
     width: 100%;
-    height: auto; /* MODIFICADO: Quitado el 98px fijo */
+    height: auto; 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px; /* Un poco de margen en los bordes para respirar */
+    padding: 0 40px; 
     box-sizing: border-box;
     position: relative;
-    flex-wrap: wrap; /* NUEVO: Permite bajar de línea si no cabe */
-    gap: 15px; /* NUEVO: Espacio entre elementos al saltar de línea */
+    flex-wrap: wrap; 
+    gap: 15px; 
 }
 
 .top-nav .nav-left {
@@ -68,7 +68,7 @@ main {
     display: flex;
     gap: 12px;
     align-items: center;
-    flex-wrap: wrap; /* NUEVO: Permite que los botones bajen si no caben */
+    flex-wrap: wrap; 
 }
 
 .nav-btn {
@@ -273,7 +273,6 @@ h1 {
     padding: 12px 24px;
     min-width: 160px;
     font-size: 1rem;
-    /* Tamaño estandarizado horizontal y verticalmente */
     border-radius: 8px;
     border: none;
     font-weight: 700;
@@ -453,7 +452,7 @@ h1 {
     justify-content: flex-start;
     align-items: center;
     text-align: center;
-    padding: 12px 40px 10px 40px; /* Incrementado para dar más espacio bajo el título */
+    padding: 12px 40px 10px 40px; 
     box-sizing: border-box;
     overflow: hidden;
 }
@@ -493,7 +492,6 @@ h1 {
     padding: 8px;
     position: absolute;
     z-index: 10;
-    /* Ubicación: arriba e izquierda por defecto para PC, ajustaremos si es necesario */
     top: 100%;
     right: 50%;
     transform: translateX(50%);
@@ -506,11 +504,10 @@ h1 {
     line-height: 1.3;
 }
 
-/* Triangulito del tooltip */
 .star-icon .tooltip-text::after {
     content: "";
     position: absolute;
-    bottom: 100%;  /* En la parte superior del globo */
+    bottom: 100%; 
     left: 50%;
     margin-left: -5px;
     border-width: 5px;
@@ -530,7 +527,7 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    padding-bottom: 5px; /* Ajuste fino para posicionarlo abajo del todo */
+    padding-bottom: 5px; 
 }
 
 /* FAQ */
@@ -565,9 +562,6 @@ h1 {
     align-items: center;
     padding: 8px 0;
     cursor: pointer;
-}
-
-.faq-question {
     font-size: 1.1rem;
 }
 
@@ -784,19 +778,27 @@ h1 {
 /* RESPONSIVE */
 @media (max-width: 768px) {
 
-    /* Header en una sola línea con soporte para varias palabras */
+    /* 1. Controlamos el espacio superior e inferior SOLO desde aquí */
+    .site-header {
+        padding: 12px 0; 
+        min-height: auto; 
+    }
+
+    /* 2. Limpiamos las alturas forzadas y el padding vertical del navegador */
     .top-nav {
         flex-direction: row;
         justify-content: space-between;
-        min-height: 70px;
+        align-items: center; /* Asegura el centrado vertical */
+        min-height: auto; /* Quitamos los 70px fijos que causaban el problema */
         height: auto;
-        padding: 5px 15px;
+        padding: 0 15px; /* Solo dejamos el margen a los lados */
         gap: 0;
     }
 
     .nav-left {
         flex-wrap: nowrap;
         justify-content: flex-start;
+        align-items: center;
         gap: 5px;
     }
 
@@ -806,12 +808,18 @@ h1 {
         white-space: normal;
         text-align: center;
         max-width: 100px;
+        /* Hacemos que el texto dentro del botón se centre verticalmente si salta de línea */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .sos-logo {
         position: static;
         transform: none;
         margin-top: 0;
+        display: flex;
+        align-items: center;
     }
 
     /* FOOTER en una sola línea */
