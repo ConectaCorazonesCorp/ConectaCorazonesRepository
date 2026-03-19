@@ -361,6 +361,30 @@ h1 {
     padding-top: 12px;
 }
 
+.entity-badge.inline-badge {
+    display: inline-block;
+    position: static;
+    transform: none;
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    background: var(--marron-oscuro);
+    color: white;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.entity-badge.badge-ong {
+    background: var(--marron-oscuro);
+}
+
+.entity-badge.badge-vol {
+    background: var(--marron-oscuro);
+}
+
 .card-logo {
     width: 160px;
     height: 160px;
@@ -668,12 +692,6 @@ h1 {
 
 .btn:disabled:hover {
     transform: none;
-}
-
-/* ENTITY BADGES (ONG / Voluntario) */
-.entity-badge {
-    display: none;
-    /* Las clases inline-badge se ocupan de esto ahora */
 }
 
 /* MODALS */
