@@ -622,9 +622,10 @@ h1 {
 }
 
 .filter-btn {
-    flex: 1 1 0; /* NUEVO: Forza a los botones a tener el mismo ancho en escritorio */
+    flex: 0 1 auto; /* MODIFICADO: No força un ancho igual, permite que dependa del contenido */
+    padding: 12px 12px; /* MODIFICADO: Reducido padding horizontal */
+    min-width: 120px; /* NUEVO: Asegura un tamaño mínimo pero no excesivo */
     max-width: 250px; /* Evita que crezcan infinitamente en pantallas anchas */
-    padding: 12px 24px;
     border-radius: 8px;
     border: 2px solid var(--gris-claro);
     background: transparent;
@@ -967,11 +968,11 @@ h1 {
     }
 
     .filter-btn {
-        flex: 1 1 0; /* NUEVO: Forza a los botones a tener el mismo ancho exacto en móvil */
-        width: 100%;
-        min-width: 0; /* Permite que se achiquen si es necesario */
+        flex: 0 1 auto; /* MODIFICADO: No força un ancho igual en móvil */
+        width: auto; /* NUEVO: Ancho automático */
+        min-width: 90px; /* Asegura un tamaño mínimo en móvil */
         margin-bottom: 0; /* Eliminado para no descuadrar */
-        padding: 10px 4px; /* Un poco menos de padding para que respiren en pantallas estrechas */
+        padding: 10px 2px; /* MODIFICADO: Reducido padding horizontal */
         font-size: 0.9rem; /* Letra ajustada */
     }
 
