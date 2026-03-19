@@ -622,8 +622,9 @@ h1 {
 }
 
 .filter-btn {
+    flex: 1 1 0; /* NUEVO: Forza a los botones a tener el mismo ancho en escritorio */
+    max-width: 250px; /* Evita que crezcan infinitamente en pantallas anchas */
     padding: 12px 24px;
-    min-width: 150px;
     border-radius: 8px;
     border: 2px solid var(--gris-claro);
     background: transparent;
@@ -778,47 +779,55 @@ h1 {
 /* RESPONSIVE */
 @media (max-width: 768px) {
 
-    /* 1. Controlamos el espacio superior e inferior */
+    /* 1. Header general */
     .site-header {
-        padding: 12px 0; 
+        padding: 10px 0; 
         min-height: auto; 
     }
 
-    /* 2. Forzamos una sola línea y un espacio uniforme */
+    /* 2. Barra de navegación FORZADA a una línea */
     .top-nav {
-        flex-direction: row;
-        flex-wrap: nowrap; /* OBLIGA a que el logo NO baje de línea */
-        justify-content: space-between;
-        align-items: center; 
-        min-height: auto; 
-        height: auto;
-        padding: 0 10px; /* Reducimos un poco el padding lateral para ganar espacio */
-        gap: 6px; /* LA MISMA SEPARACIÓN para el contenedor principal */
-    }
-
-    .nav-left {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important; 
         align-items: center;
-        gap: 6px; /* LA MISMA SEPARACIÓN entre botones */
-        flex: 1; /* Toma todo el espacio sobrante a la izquierda del logo */
+        justify-content: space-between;
+        padding: 0 10px;
+        gap: 8px;
+        width: 100%;
+        box-sizing: border-box;
     }
 
+    /* 3. Contenedor de botones a la izquierda */
+    .nav-left {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important; 
+        align-items: stretch; 
+        justify-content: space-between;
+        flex: 1; 
+        gap: 6px;
+        min-width: 0; 
+    }
+
+    /* 4. Botones repartidos equitativamente */
     .nav-btn {
-        padding: 6px 4px; /* Un poco menos de padding lateral para que respire */
-        font-size: 0.75rem; /* Un poco más pequeño para asegurar que todo quepa en una línea */
+        flex: 1 1 0; 
+        min-width: 0; 
+        padding: 6px 2px;
+        font-size: 0.75rem; 
         line-height: 1.2;
-        white-space: normal;
         text-align: center;
+        white-space: normal; 
         display: flex;
         align-items: center;
         justify-content: center;
-        flex: 1; /* Hace que los 3 botones midan igual y se repartan el espacio equitativamente */
-        max-width: none;
+        border-radius: 6px;
     }
 
+    /* 5. Contenedor del logo protegido */
     .nav-right {
+        flex-shrink: 0; 
         display: flex;
         align-items: center;
     }
@@ -826,15 +835,14 @@ h1 {
     .sos-logo {
         position: static;
         transform: none;
-        margin-top: 0;
+        margin: 0;
         display: flex;
         align-items: center;
-        flex-shrink: 0; /* Evita que el logo se aplaste por culpa de los botones */
     }
 
     .sos-logo img {
-        width: 45px; /* Achicamos ligeramente el logo en móvil para que encaje perfecto en 1 línea */
-        height: 45px;
+        width: 42px; 
+        height: 42px;
     }
 
     /* FOOTER en una sola línea */
@@ -951,16 +959,20 @@ h1 {
     /* Filter buttons stacking */
     .filter-buttons {
         display: flex !important;
-        flex-direction: row;
-        flex-wrap: wrap;
+        flex-direction: row; /* Los botones se quedan uno al lado del otro */
+        flex-wrap: nowrap; /* Impide que bajen a la siguiente línea */
         justify-content: center;
+        gap: 10px; /* Separación equitativa */
         margin: 15px 0;
     }
 
     .filter-btn {
-        width: auto;
-        min-width: 120px;
-        margin-bottom: 10px;
+        flex: 1 1 0; /* NUEVO: Forza a los botones a tener el mismo ancho exacto en móvil */
+        width: 100%;
+        min-width: 0; /* Permite que se achiquen si es necesario */
+        margin-bottom: 0; /* Eliminado para no descuadrar */
+        padding: 10px 4px; /* Un poco menos de padding para que respiren en pantallas estrechas */
+        font-size: 0.9rem; /* Letra ajustada */
     }
 
     .modal-content .btn {
