@@ -44,19 +44,23 @@ main {
     width: 100%;
     background: var(--marron-claro);
     position: relative;
-    min-height: 98px;
+    height: auto; /* MODIFICADO: Ajuste automático */
+    min-height: 70px; /* MODIFICADO: Altura mínima */
+    padding: 15px 0; /* NUEVO: Espaciado arriba y abajo */
     box-sizing: border-box;
 }
 
 .top-nav {
     width: 100%;
-    height: 98px;
+    height: auto; /* MODIFICADO: Quitado el 98px fijo */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 0 40px; /* Un poco de margen en los bordes para respirar */
     box-sizing: border-box;
     position: relative;
+    flex-wrap: wrap; /* NUEVO: Permite bajar de línea si no cabe */
+    gap: 15px; /* NUEVO: Espacio entre elementos al saltar de línea */
 }
 
 .top-nav .nav-left {
@@ -64,6 +68,7 @@ main {
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap; /* NUEVO: Permite que los botones bajen si no caben */
 }
 
 .nav-btn {
