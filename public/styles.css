@@ -261,7 +261,7 @@ h1 {
     accent-color: var(--marron-oscuro);
 }
 
-/* BOTONES */
+/* BOTONES (ENCUESTA) */
 .button-group {
     display: flex;
     justify-content: center;
@@ -270,8 +270,8 @@ h1 {
 }
 
 .btn {
-    padding: 12px 24px;
-    min-width: 160px;
+    padding: 12px 10px; /* Reducimos el padding lateral para no abultar */
+    width: 135px; /* MODIFICADO: Esto hace que sean exactamente iguales y más pequeños */
     font-size: 1rem;
     border-radius: 8px;
     border: none;
@@ -622,10 +622,10 @@ h1 {
 }
 
 .filter-btn {
-    flex: 0 1 auto; /* MODIFICADO: No força un ancho igual, permite que dependa del contenido */
-    padding: 12px 12px; /* MODIFICADO: Reducido padding horizontal */
-    min-width: 120px; /* NUEVO: Asegura un tamaño mínimo pero no excesivo */
-    max-width: 250px; /* Evita que crezcan infinitamente en pantallas anchas */
+    flex: 0 1 auto; 
+    padding: 12px 12px; 
+    min-width: 120px; 
+    max-width: 250px; 
     border-radius: 8px;
     border: 2px solid var(--gris-claro);
     background: transparent;
@@ -960,20 +960,20 @@ h1 {
     /* Filter buttons stacking */
     .filter-buttons {
         display: flex !important;
-        flex-direction: row; /* Los botones se quedan uno al lado del otro */
-        flex-wrap: nowrap; /* Impide que bajen a la siguiente línea */
+        flex-direction: row; 
+        flex-wrap: nowrap; 
         justify-content: center;
-        gap: 10px; /* Separación equitativa */
+        gap: 10px; 
         margin: 15px 0;
     }
 
     .filter-btn {
-        flex: 0 1 auto; /* MODIFICADO: No força un ancho igual en móvil */
-        width: auto; /* NUEVO: Ancho automático */
-        min-width: 90px; /* Asegura un tamaño mínimo en móvil */
-        margin-bottom: 0; /* Eliminado para no descuadrar */
-        padding: 10px 2px; /* MODIFICADO: Reducido padding horizontal */
-        font-size: 0.9rem; /* Letra ajustada */
+        flex: 0 1 auto; 
+        width: auto; 
+        min-width: 90px; 
+        margin-bottom: 0; 
+        padding: 10px 2px; 
+        font-size: 0.9rem; 
     }
 
     .modal-content .btn {
